@@ -32,4 +32,16 @@ function encode_set_ambient(&$a, $type, $value) {
   array_push($a, $type, $value);
 }
 
+function encode_left_ear(&$a, $pos) {
+   array_push($a, 4, $pos);
+}
+
+function encode_right_ear(&$a, $pos) {
+   array_push($a, 5, $pos);
+}
+
+function encode_ear_positions(&$a, $left, $right) {
+   array_push($a, 4, $left, 5, $right);
+}
+
 ?>
