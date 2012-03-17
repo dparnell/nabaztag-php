@@ -21,5 +21,12 @@ require('header.php'); ?>
 <div class="marketing">
   <h1>Your Nabaztag Server is not yet configured.</h1>
   <p class="marketing-byline">Let's get ready to rock!</p>
+  <form method="post">
+    <fieldset data-role="controlgroup">
+      <legend>Where do you want to store your data:</legend>
+      <input type="radio" name="db" value="sqlite" id="use-sqlite"/><label for="use-sqlite">Use SQLite</label>
+      <input type="radio" name="db" value="other" id="use-other"/><label for="use-other">Use Other</label>
+    </fieldset>
+  </form>
 </div>
 <?php require('footer.php'); ?>

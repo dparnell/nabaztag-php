@@ -4,16 +4,19 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Nabaztag</title>
-    
+
     <link href="css/bootstrap.css" rel="stylesheet"/>
     <link href="css/bootstrap-responsive.css" rel="stylesheet"/>
     <link href="css/docs.css" rel="stylesheet"/>
+    <link href="css/jquery.mobile-1.0.1.css" rel="stylesheet"/>
+    <link href="css/jquery.mobile.structure-1.0.1.css" rel="stylesheet"/>    
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile-1.0.1.js"></script>
   </head>
   <body>
 
