@@ -2,7 +2,7 @@
   </div>
   <div class="footer">
     Nabaztag Server by Daniel Parnell<br />
-    Copyright Daniel Parnell
+    Copyright 2012 Daniel Parnell
   </div>
 </body>
 </html>
