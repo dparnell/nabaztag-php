@@ -24,8 +24,17 @@ require('header.php'); ?>
   <form method="post">
     <fieldset data-role="controlgroup">
       <legend>Where do you want to store your data:</legend>
-      <input type="radio" name="db" value="sqlite" id="use-sqlite"/><label for="use-sqlite">Use SQLite</label>
-      <input type="radio" name="db" value="other" id="use-other"/><label for="use-other">Use Other</label>
+      <input type="radio" name="db" value="sqlite" id="use-sqlite"/><label for="use-sqlite">Use embedded SQlite database</label>
+      <input type="radio" name="db" value="other" id="use-other"/><label for="use-other">Use a different database</label>
+    </fieldset>
+    <fieldset data-role="controlgroup">
+      <legend>Administrator User Details:</legend>
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username" />
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" />
+      <label for="confirm">Confirm:</label>
+      <input type="text" name="confirm" id="confirm" />
     </fieldset>
   </form>
 </div>
