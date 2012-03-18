@@ -1,5 +1,8 @@
-<?php 
-require_once('app.php');
+<?php
+if(file_exists(dirname(__FILE__).'/config.php')) {
+  require_once('config.php');
+} 
+
 if(isset($config) && !$_SESSION['admin']) {
   $error_message = "You must be an administrator to access this page";
   require_once('failed.php');
@@ -21,10 +24,11 @@ require('header.php'); ?>
 <div class="marketing">
   <h1>Your Nabaztag Server is not yet configured.</h1>
   <p class="marketing-byline">Let's get ready to rock!</p>
-  <form method="post">
+
+  <form method="post" action="setup.php" id="setup-form" data-ajax="false" class="ui-body ui-body-b ui-corner-all">
     <fieldset data-role="controlgroup">
       <legend>Where do you want to store your data:</legend>
-      <input type="radio" name="db" value="sqlite" id="use-sqlite"/><label for="use-sqlite">Use embedded SQlite database</label>
+      <input type="radio" name="db" value="sqlite" id="use-sqlite" checked="checked"/><label for="use-sqlite">Use embedded SQlite database</label>
       <input type="radio" name="db" value="other" id="use-other"/><label for="use-other">Use a different database</label>
     </fieldset>
     <fieldset data-role="controlgroup">
@@ -36,6 +40,8 @@ require('header.php'); ?>
       <label for="confirm">Confirm:</label>
       <input type="text" name="confirm" id="confirm" />
     </fieldset>
+    <input type="submit" name="submit" value="Save" id="submit" data-role="none" class="btn button"/>
   </form>
+
 </div>
 <?php require('footer.php'); ?>
