@@ -17,8 +17,10 @@
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.0.1.js"></script>
+    <script type="text/javascript" src="js/jquery.validate.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
   </head>
-  <body>
+  <body data-ajax="false">
 
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
