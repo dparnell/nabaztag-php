@@ -32,6 +32,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
 }
 
+$dir = dirname(__FILE__);
+
 require('header.php'); ?>
 <header class="jumbotron masthead">
   <div class="inner">
@@ -49,10 +51,15 @@ require('header.php'); ?>
   <h1>Your Nabaztag Server is not yet configured.</h1>
   <p class="marketing-byline">Let's get ready to rock!</p>
 
+  <?php if(is_writable($dir)) { ?>
   <form method="post" action="setup.php" id="setup-form" data-ajax="false" class="ui-body ui-body-b ui-corner-all">
     <fieldset data-role="controlgroup">
       <legend>Where do you want to store your data:</legend>
+      <?php if(is_writable($dir."/db")) { ?>
       <input type="radio" name="db" value="sqlite" id="use-sqlite" checked="checked"/><label for="use-sqlite">Use auto-configured SQlite database</label>
+      <?php } else { ?>
+      <input type="radio" name="db" value="sqlite-not-available" id="use-sqlite" disabled="disabled"/><label for="use-sqlite">Use auto-configured SQlite database - not available as <?php echo $dir."/db" ?> is not writable</label>
+      <?php } ?>
       <input type="radio" name="db" value="other" id="use-other"/><label for="use-other">Configure database connection manually</label>
     </fieldset>
     <fieldset data-role="controlgroup" id="pdo-settings" style="display: none">
@@ -90,4 +97,11 @@ require('header.php'); ?>
     });
   });
 </script>
+<?php } else { ?>
+<div class="alert alert-error">
+  <h2>Error</h2>
+  <p>Please make sure that <?php echo $dir; ?> is writable by your web server.</p>
+  <p>Until this is done it is not possible to configure your simple nabaztag server.</p>
+</div>
+<?php } ?>
 <?php require('footer.php'); ?>
