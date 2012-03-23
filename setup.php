@@ -21,13 +21,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
 
   require('lib/db.php');
+  
+  if($_POST['password'] != $_POST['confirm']) {
+    $error = "Password and password confirmation do not match";
+  }
 
   if(isset($error)) {
     unset($config);
   } else {
     if(install_database_tables($db)) {
       save_config($config);
-      create_user($db, $config, $_POST['username'], $_POST['password']);
+      create_user($db, $config, $_POST['username'], $_POST['password'], true);
     }
   }
 }

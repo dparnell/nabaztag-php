@@ -42,7 +42,7 @@ function install_database_tables($db) {
 	  foreach(explode(";", $sql) as $statement) {
 	    $statement = trim($statement);
 	    if($statement != "") {
-	      echo "<code><pre>$statement</pre></code><br/>";
+#	      echo "<code><pre>$statement</pre></code><br/>";
 	      $db->exec($statement);
 	      $db->exec("insert into schema_migrations(version) values ('$migration')");
 	    }
@@ -55,6 +55,16 @@ function install_database_tables($db) {
   }
 
   return true;
+}
+
+function create_user($db, $config, $username, $password, $admin) {
+  if($admin) {
+    $flag = 'T';
+  } else {
+    $flag = 'F';
+  }
+  $st = $db->prepare("insert into users (username, password, is_admin) values (?, ?, ?)");
+  $st->execute(array($username, sha1($password.'-'.$config['password-salt']), $flag));
 }
 
 ?>
