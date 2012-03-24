@@ -1,5 +1,15 @@
 <?php
+require('app.php');
+
 require('lib/encode.php');
+require('lib/rabbit.php');
+
+if(isset($config)) {
+  $rabbit = find_rabbit($db, $_REQUEST['sn']);
+} else {
+  $rabbit = false;
+}
+
 # Ping request from a rabbit
 $data = array(0x7f);
 
@@ -20,5 +30,9 @@ foreach($ambient as $e) { array_push($data, $e); }
 array_push($data, 0xff, 0x0a);
 
 echo encode_array($data);
+
+if($rabbit) {
+  finished_rabbit($db, $rabbit);
+}
 
 ?>

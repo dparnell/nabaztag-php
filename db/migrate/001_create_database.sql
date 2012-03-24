@@ -11,5 +11,5 @@ create table rabbits (
   mac_id    varchar(32),
   name      varchar(128),
   owner_id  integer,
-  last_seen datetime
+  last_seen integer
 );

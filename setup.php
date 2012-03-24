@@ -4,6 +4,7 @@ require_once('config.php');
 if(isset($config)) {
   $error_message = "Your server is already configured";
   require_once('failed.php');
+  exit();
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -29,9 +30,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
   if(isset($error)) {
     unset($config);
   } else {
+    echo "HERE";
     if(install_database_tables($db)) {
       save_config($config);
       create_user($db, $config, $_POST['username'], $_POST['password'], true);
+      $info = "Configuratio successful";
     }
   }
 }

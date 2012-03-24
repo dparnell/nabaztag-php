@@ -1,3 +1,7 @@
 <ul class="nav">
-  <li><a href="login.php">Log In</a></li>
+  <?php if(isset($_SESSION) and array_key_exists('user', $_SESSION)) { ?>
+  <li><a href="logout.php">Logout</a></li>
+  <?php } else { ?>
+  <li><a href="login.php">Login</a></li>
+  <?php } ?>
 </ul>

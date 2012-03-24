@@ -44,9 +44,10 @@ function install_database_tables($db) {
 	    if($statement != "") {
 #	      echo "<code><pre>$statement</pre></code><br/>";
 	      $db->exec($statement);
-	      $db->exec("insert into schema_migrations(version) values ('$migration')");
 	    }
 	  }
+
+	  $db->exec("insert into schema_migrations(version) values ('$migration')");
 	}
       }
     } 
@@ -65,6 +66,26 @@ function create_user($db, $config, $username, $password, $admin) {
   }
   $st = $db->prepare("insert into users (username, password, is_admin) values (?, ?, ?)");
   $st->execute(array($username, sha1($password.'-'.$config['password-salt']), $flag));
+}
+
+function attempt_login($db, $config, $username, $password) {
+  $st = $db->prepare("select * from users where username=? and password=?");
+  $st->execute(array($username, sha1($password.'-'.$config['password-salt'])));
+  $user = $st->fetch(PDO::FETCH_ASSOC);
+
+  return $user;
+}
+
+function rabbit_online_count($db) {
+  $st = $db->prepare("select count(*) c from rabbits where ?-last_seen < 600");
+  $st->execute(array(time()));
+  $row = $st->fetch(PDO::FETCH_ASSOC);
+
+  if($row) {
+    return $row['c'];
+  }
+
+  return 0;
 }
 
 ?>
