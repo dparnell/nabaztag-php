@@ -1,42 +1,54 @@
 <?php
 require_once('config.php');
+require_once('lib/misc.php');
 
-if(isset($config)) {
-  $error_message = "Your server is already configured";
-  require_once('failed.php');
+if(isset($config) && !logged_in()) {
+  $error = "Your server is already configured";
+  require_once('index.php');
   exit();
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $config = array();
-  $config['password-salt'] = sha1(date('l jS \of F Y h:i:s A').mt_rand().mt_rand());
+  if(!isset($config)) {
+    $config = array();
+    $config['password-salt'] = sha1(date('l jS \of F Y h:i:s A').mt_rand().mt_rand());
 
-  if($_POST['db'] == 'sqlite') {
-    $dir = dirname(__FILE__)."/db";
+    if($_POST['db'] == 'sqlite') {
+      $dir = dirname(__FILE__)."/db";
+      
+      $config['connect-string'] = "sqlite:/$dir/nabaztag.sqlite3";
+    } else {
+      $config['connect-string'] = $_POST['connect-string'];
+      $config['db-user'] = $_POST['db-user'];
+      $config['db-password'] = $_POST['db-password'];
+    }
+    
+    if($_POST['password'] != $_POST['confirm']) {
+      $error = "Password and password confirmation do not match";
+    }
 
-    $config['connect-string'] = "sqlite:/$dir/nabaztag.sqlite3";
-  } else {
-    $config['connect-string'] = $_POST['connect-string'];
-    $config['db-user'] = $_POST['db-user'];
-    $config['db-password'] = $_POST['db-password'];
   }
 
-  require('lib/db.php');
+  $config['server-timezone'] = $_POST['server-timezone'];
+
+
+  require_once('lib/db.php');
   
-  if($_POST['password'] != $_POST['confirm']) {
-    $error = "Password and password confirmation do not match";
-  }
 
   if(isset($error)) {
     unset($config);
   } else {
-    echo "HERE";
     if(install_database_tables($db)) {
       save_config($config);
-      create_user($db, $config, $_POST['username'], $_POST['password'], true);
-      $info = "Configuratio successful";
+
+      if(!logged_in()) {
+	create_user($db, $config, $_POST['username'], $_POST['password'], true);
+      }
+      $info = "Configuration successful";
     }
   }
+} else {
+  require_once('lib/db.php');
 }
 
 $dir = dirname(__FILE__);
@@ -55,11 +67,17 @@ require('header.php'); ?>
 <hr class="soften">
 
 <div class="marketing">
+  <?php if(logged_in()) { ?>
+  <h1>Reconfigure your Nabaztag Server.</h1>
+  <p class="marketing-byline">Time to make some changes!</p>
+  <?php } else { ?>
   <h1>Your Nabaztag Server is not yet configured.</h1>
   <p class="marketing-byline">Let's get ready to rock!</p>
+  <?php } ?>
 
   <?php if(is_writable($dir)) { ?>
   <form method="post" action="setup.php" id="setup-form" data-ajax="false" class="ui-body ui-body-b ui-corner-all">
+    <?php if(!logged_in()) { ?>
     <fieldset data-role="controlgroup">
       <legend>Where do you want to store your data:</legend>
       <?php if(is_writable($dir."/db")) { ?>
@@ -87,7 +105,15 @@ require('header.php'); ?>
       <label for="confirm">Confirm:</label>
       <input type="password" name="confirm" id="confirm" class="required"/>
     </fieldset>
-    <input type="submit" name="submit" value="Save" id="submit" data-role="none" class="btn button"/>
+    <?php } ?>
+    <fieldset data-role="controlgroup">
+      <legend>Server Timezone:</legend>
+      <?php timezone_select('server-timezone', isset($config) && array_key_exists('server-timezone', $config) ? $config['server-timezone'] : null); ?>
+    </fieldset>
+    
+    <fieldset data-role="controlgroup">
+      <input type="submit" name="submit" value="Save" id="submit" data-role="none" class="btn button"/>
+    </fieldset>
   </form>
 
 </div>
