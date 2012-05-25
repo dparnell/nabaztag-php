@@ -26,4 +26,64 @@ function finished_rabbit($db, $rabbit) {
   $st->execute(array(time(), $rabbit['id']));  
 }
 
+function rabbit_mac($rabbit) {
+  return $rabbit['mac_id'];
+}
+
+function apps_for_rabbit($db, $rabbit) {
+  $st = $db->prepare("select * from apps where rabbit_id = ? and (next_update<=? or next_update is null)");
+  if($st) {
+    $st->execute(array($rabbit['id'], time()));  
+  
+    return $st->fetchAll(PDO::FETCH_ASSOC);  
+  }
+
+  return array();
+}
+
+function remove_rabbit_app($db, $app) {
+  $st = $db->prepare("delete from apps where id=?");
+  $st->execute(array($app['id']));
+}
+
+function reschedule_rabbit_app($db, $app) {
+  $st = $db->prepare("update apps set next_update=next_update+reschedule_interval where id=?");
+  $st->execute(array($app['id']));
+}
+
+function app_name($app) {
+  return $app['application'];
+}
+
+function app_next_update_time($app) {
+  $next = $app['next_update'];
+
+  if($next && $next > 0) {
+    return strftime('%Y-%m-%d %H:%M', $next);
+  }
+
+  return 'Now';
+}
+
+function app_update_interval($app) {
+  $interval = $app['reschedule_interval'];
+
+  if($interval && $interval>0) {
+    if($interval < 10) {
+      return 'Constant';
+    }
+
+    if($interval < 90) {
+      return $interval.' seconds';
+    }
+    if($interval < 90*60) {
+      return floor($interval/60).' minutes';
+    }
+
+    return floor($interval/(60*60)).' hours';
+  }
+
+  return 'Once off';
+}
+
 ?>

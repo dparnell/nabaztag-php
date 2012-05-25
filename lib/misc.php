@@ -8,6 +8,26 @@ function is_admin() {
   return logged_in() && $_SESSION['is-admin'] == 'T';
 }
 
+function current_user_id() {
+  if(logged_in()) {
+    return $_SESSION['user'];
+  }
+
+  return null;
+}
+
+function rabbit_name($rabbit) {
+  return $rabbit['name'] ? $rabbit['name'] : $rabbit['mac_id'];
+}
+
+function rabbit_status($rabbit) {
+  if($rabbit['last_seen'] > time() - 600) {
+    return 'Online';
+  }
+
+  return 'Offline';
+}
+
 function timezone_select($name, $value) {
   $zones = timezone_identifiers_list();
 

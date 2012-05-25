@@ -31,9 +31,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   $config['server-timezone'] = $_POST['server-timezone'];
 
+  foreach($_POST as $key => $value) {
+    if(strpos($key, 'app-') == 0) {
+      $config[$key] = $value;
+    }
+  }
 
-  require_once('lib/db.php');
-  
+  require_once('lib/db.php');  
 
   if(isset($error)) {
     unset($config);
@@ -108,9 +112,17 @@ require('header.php'); ?>
     <?php } ?>
     <fieldset data-role="controlgroup">
       <legend>Server Timezone:</legend>
-      <?php timezone_select('server-timezone', isset($config) && array_key_exists('server-timezone', $config) ? $config['server-timezone'] : null); ?>
+      <?php timezone_select('server-timezone', config_value('server-timezone')); ?>
     </fieldset>
     
+<?php 
+    $dir = dirname(__FILE__)."/apps";
+    $setup_files = scandir($dir);
+    foreach($setup_files as $file) {
+      if(preg_match("/_setup.php$/i", $file) == 1) {
+	require($dir.'/'.$file);
+      }
+    } ?>
     <fieldset data-role="controlgroup">
       <input type="submit" name="submit" value="Save" id="submit" data-role="none" class="btn button"/>
     </fieldset>

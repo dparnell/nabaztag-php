@@ -10,7 +10,6 @@ $RAIN = 3;
 $SNOW = 4;
 $STORMS = 5;
 
-
 function encode_array($a) {
   $result = "";
   foreach($a as $e) {

@@ -88,4 +88,16 @@ function rabbit_online_count($db) {
   return 0;
 }
 
+function rabbits($db) {
+  $sql = "select * from rabbits where owner_id=?";
+  if(is_admin()) {
+    $sql .= " or owner_id is null";
+  }
+
+  $st = $db->prepare($sql." order by name");
+  $st->execute(array(current_user_id()));
+  
+  return $st->fetchAll(PDO::FETCH_ASSOC);
+}
+
 ?>
