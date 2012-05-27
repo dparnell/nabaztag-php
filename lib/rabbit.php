@@ -31,14 +31,34 @@ function rabbit_mac($rabbit) {
 }
 
 function apps_for_rabbit($db, $rabbit) {
-  $st = $db->prepare("select * from apps where rabbit_id = ? and (next_update<=? or next_update is null)");
+  $st = $db->prepare("select * from apps where rabbit_id = ? and (next_update<=? or next_update is null or next_update='')");
   if($st) {
-    $st->execute(array($rabbit['id'], time()));  
+    $st->execute(array($rabbit['id'], time()));
   
     return $st->fetchAll(PDO::FETCH_ASSOC);  
   }
 
   return array();
+}
+
+function app_for_rabbit($db, $rabbit, $app_name) {
+  $st = $db->prepare("select * from apps where rabbit_id = ? and application = ?");
+  if($st) {
+    $st->execute(array($rabbit['id'], $app_name));  
+  
+    $result = $st->fetch(PDO::FETCH_ASSOC);  
+  }
+
+  if($result == null) {
+    $result = array();
+    $result['rabbit_id'] = $rabbit['id'];
+    $result['application'] = $app_name;
+    $result['next_update'] = null;
+    $result['reshedule_interval'] = null;
+    $result['data'] = null;
+  }
+
+  return $result;
 }
 
 function remove_rabbit_app($db, $app) {
@@ -47,8 +67,8 @@ function remove_rabbit_app($db, $app) {
 }
 
 function reschedule_rabbit_app($db, $app) {
-  $st = $db->prepare("update apps set next_update=next_update+reschedule_interval where id=?");
-  $st->execute(array($app['id']));
+  $st = $db->prepare("update apps set next_update=?+reschedule_interval where id=?");
+  $st->execute(array(time(), $app['id']));
 }
 
 function app_name($app) {
@@ -63,6 +83,16 @@ function app_next_update_time($app) {
   }
 
   return 'Now';
+}
+
+function save_rabbit_app($db, $rabbit, $app) {
+  if(array_key_exists('id', $app)) {
+    $st = $db->prepare("update apps set data=? where id=?");
+    $st->execute(array($app['data'], $app['id']));
+  } else {
+    $st = $db->prepare("insert into apps (rabbit_id, application, next_update, reschedule_interval, data) values (?, ?, ?, ?, ?)");
+    $st->execute(array($rabbit['id'], $app['application'], $app['next_update'], $app['reschedule_interval'], $app['data']));
+  }
 }
 
 function app_update_interval($app) {

@@ -20,8 +20,12 @@ function rabbit_name($rabbit) {
   return $rabbit['name'] ? $rabbit['name'] : $rabbit['mac_id'];
 }
 
+function rabbit_is_online($rabbit) {
+  return $rabbit['last_seen'] > time() - 600;
+}
+
 function rabbit_status($rabbit) {
-  if($rabbit['last_seen'] > time() - 600) {
+  if(rabbit_is_online($rabbit)) {
     return 'Online';
   }
 

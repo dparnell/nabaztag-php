@@ -114,6 +114,12 @@ require('header.php'); ?>
       <legend>Server Timezone:</legend>
       <?php timezone_select('server-timezone', config_value('server-timezone')); ?>
     </fieldset>
+
+    <fieldset data-role="controlgroup">
+      <legend>Media:</legend>
+      <label for="app-media-base">Base URL for media files:</label>
+      <input type="text" name="app-media-base" id="app-media-base" value="<?php echo config_value('app-media-base', 'http://karotz.s3.amazonaws.com/applications/'); ?>"/>
+    </fieldset>
     
 <?php 
     $dir = dirname(__FILE__)."/apps";
