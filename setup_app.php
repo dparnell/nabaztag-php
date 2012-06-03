@@ -7,7 +7,6 @@ if(!logged_in()) {
   exit();
 }
 
-require('header.php');
 require_once('lib/db.php');
 require('lib/rabbit.php');
 $rabbit = find_rabbit($db, $_REQUEST['rabbit']);
@@ -49,6 +48,7 @@ function app_value($key, $default = null) {
   return $default;
 }
 
+require('header.php');
 
 ?>
 <header class="jumbotron masthead">

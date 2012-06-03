@@ -1,5 +1,6 @@
 <ul class="nav">
   <?php if(logged_in()) { ?>
+  <li><a href="index.php">Rabbits</a></li>
   <?php if(is_admin()) { ?>
   <li><a href="setup.php">Setup</a></li>
   <?php } ?>

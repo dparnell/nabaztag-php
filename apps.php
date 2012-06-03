@@ -7,11 +7,11 @@ if(!logged_in()) {
   exit();
 }
 
-require('header.php');
 require_once('lib/db.php');
 require('lib/rabbit.php');
 $rabbit = find_rabbit($db, $_REQUEST['rabbit']);
 
+require('header.php');
 ?>
 <header class="jumbotron masthead">
   <div class="inner">
@@ -28,7 +28,7 @@ $rabbit = find_rabbit($db, $_REQUEST['rabbit']);
   <table class="ui-body ui-body-b ui-corner-all">
     <tr><th class="ui-controlgroup-label">Application</th><th class="ui-controlgroup-label">Next Update</th><th class="ui-controlgroup-label">Interval</th></tr>
   <?php foreach($apps as $app) { ?>
-    <tr><td><?php echo app_name($app); ?></td><td><?php echo app_next_update_time($app); ?></td><td><?php echo app_update_interval($app); ?></td></tr>
+    <tr><td><a href="setup_app.php?rabbit=<?php echo $rabbit['mac_id']; ?>&app=<?php echo $app['application']; ?>"><?php echo app_name($app); ?></a></td><td><?php echo app_next_update_time($app); ?></td><td><?php echo app_update_interval($app); ?></td></tr>
   <?php } ?>
   </table>
 </div>

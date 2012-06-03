@@ -46,4 +46,39 @@ function timezone_select($name, $value) {
   echo '</select>';
 }
 
+function cache_dir() {
+  global $APP_DIR;
+
+  return $APP_DIR."/cache";
+}
+
+function is_cache_available() {
+  return is_writable(cache_dir());
+}
+
+function cache_get($key, $max_age = 3600) {
+  $cache_file = cache_dir().'/'.sha1($key);
+  
+  if(file_exists($cache_file)) {
+    $access_time = filemtime($cache_file);
+    if($access_time && time()-$access_time < $max_age) {
+      return file_get_contents($cache_file);
+    }
+  }
+
+  return null;
+}
+
+function cache_put($key, $value) {
+  $cache_file = cache_dir().'/'.sha1($key);
+  file_put_contents($cache_file, $value);
+}
+
+function cache_remove($key) {
+  $cache_file = cache_dir().'/'.sha1($key);
+  if(file_exists($cache_file)) {
+    unlink($cache_file);
+  }
+}
+
 ?>
