@@ -27,9 +27,31 @@ require('header.php');
 <?php $apps = apps_for_rabbit($db, $rabbit); ?>
   <table class="ui-body ui-body-b ui-corner-all">
     <tr><th class="ui-controlgroup-label">Application</th><th class="ui-controlgroup-label">Next Update</th><th class="ui-controlgroup-label">Interval</th></tr>
-  <?php foreach($apps as $app) { ?>
+  <?php
+  $configured_apps = array();
+  foreach($apps as $app) { 
+    array_push($configured_apps, $app['application']);
+  ?>
     <tr><td><a href="setup_app.php?rabbit=<?php echo $rabbit['mac_id']; ?>&app=<?php echo $app['application']; ?>"><?php echo app_name($app); ?></a></td><td><?php echo app_next_update_time($app); ?></td><td><?php echo app_update_interval($app); ?></td></tr>
   <?php } ?>
+  </table>
+
+  <h2>Available Apps for your rabbit</h2>
+  <table class="ui-body ui-body-b ui-corner-all">
+    <tr><th class="ui-controlgroup-label">Application</th></tr>
+<?php
+$files = scandir(dirname(__FILE__)."/apps");
+foreach($files as $file) {
+  if(preg_match("/(.*)_app\.php/i", $file, $matches)) {
+    $app = $matches[1];
+    if(!in_array($app, $configured_apps)) { ?>
+    <tr><td><a href="setup_app.php?rabbit=<?php echo $rabbit['mac_id']; ?>&app=<?php echo $app; ?>"><?php echo $app; ?></a></td></tr>
+<?php
+    }
+  }
+}
+
+?>
   </table>
 </div>
 <?php require('footer.php'); ?>

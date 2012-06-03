@@ -1,13 +1,14 @@
 <?php
 
-function weather_rabbit_app($db, $rabbit, $app_data, &$data) {
+function weather_data_for_location($city) {
   // weather condition codes - http://www.worldweatheronline.com/feed/wwoConditionCodes.xml
   // weather query - http://free.worldweatheronline.com/feed/weather.ashx?q=<city here>&format=xml&num_of_days=1&key=<api key here>
-  $url = "http://free.worldweatheronline.com/feed/weather.ashx?q=".urlencode($app_data['city'])."&format=xml&num_of_days=1&key=".config_value('app-weather-api-key');
+
+  $url = "http://free.worldweatheronline.com/feed/weather.ashx?q=".urlencode($city)."&format=xml&num_of_days=1&key=".config_value('app-weather-api-key');
 
   $xml = cache_get($url);
   if($xml == null) {
-    error_log("Fetching weather data for: ".$app_data['city']);
+    error_log("Fetching weather data for: ".$city);
 
     $xml = "";
     if ($fp = fopen($url, 'r')) {
@@ -19,9 +20,14 @@ function weather_rabbit_app($db, $rabbit, $app_data, &$data) {
 
     cache_put($url, $xml);
   } else {
-    error_log("Using cached weather data for: ".$app_data['city']);
+    error_log("Using cached weather data for: ".$city);
   }
 
+  return $xml;
+}
+
+function weather_code_for_location($city) {
+  $xml = weather_data_for_location($city);
   $doc = simplexml_load_string($xml);
   $weather = $doc->xpath("//current_condition/weatherCode/text()");
   $weather = (string)$weather[0];
@@ -85,13 +91,17 @@ function weather_rabbit_app($db, $rabbit, $app_data, &$data) {
 		 '113' => $SUNNY, // Clear/Sunny
 		 );
 
-  //  $weather = $weather[0];
-  
   if(array_key_exists($weather, $codes)) {
     $code = $codes[$weather]; 
   }  else {
     $code = $SUNNY;
   }
+
+  return $code;
+}
+
+function weather_rabbit_app($db, $rabbit, $app_data, &$data) {
+  $code = weather_code_for_location($app_data['city']);
 
   $ambient = array();
   encode_set_ambient($ambient, 1, $code);

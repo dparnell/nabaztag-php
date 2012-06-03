@@ -30,6 +30,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
   $app['data'] = serialize($app_data);
 
   save_rabbit_app($db, $rabbit, $app);
+  header("Location: apps.php?rabbit=".$rabbit['mac_id']);
+
+  exit();
 } else {
   if($app['data']) {
     $app_data = unserialize($app['data']);

@@ -21,7 +21,7 @@ array_push($data, 0x03, 0x00, 0x00, 0x01, 10);
 foreach($apps as $app) {
   $name = $app['application'];
 
-  require_once('apps/'.$name.'.php');
+  require_once('apps/'.$name.'_app.php');
 
   $app_data = unserialize($app['data']);
   
