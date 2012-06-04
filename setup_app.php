@@ -29,6 +29,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   $app['data'] = serialize($app_data);
 
+  if(!array_key_exists('reschedule_interval', $app)) {
+    $app['reschedule_interval'] = 0;
+  }
+
   save_rabbit_app($db, $rabbit, $app);
   header("Location: apps.php?rabbit=".$rabbit['mac_id']);
 
