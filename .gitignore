@@ -1,5 +1,4 @@
 *~
 *.sqlite3
-config.php
 *#*
 /app_config.php
