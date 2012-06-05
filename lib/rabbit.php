@@ -86,6 +86,13 @@ function app_next_update_time($app) {
 }
 
 function save_rabbit_app($db, $rabbit, $app) {
+  if(!array_key_exists('next_update', $app)) {
+    $app['next_update'] = 0;
+  }
+  if(!array_key_exists('reschedule_interval', $app)) {
+    $app['reschedule_interval'] = 0;
+  }
+
   if(array_key_exists('id', $app)) {
     $st = $db->prepare("update apps set data=? where id=?");
     $st->execute(array($app['data'], $app['id']));
