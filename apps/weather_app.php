@@ -26,9 +26,12 @@ function weather_data_for_location($city) {
   return $xml;
 }
 
-function weather_code_for_location($city) {
-  $xml = weather_data_for_location($city);
-  $doc = simplexml_load_string($xml);
+function weather_temp_for_doc($doc, $scale = 'C') {
+  $weather = $doc->xpath("//current_condition/temp_".$scale."/text()");
+  return (string)$weather[0];
+}
+
+function weather_code_for_doc($doc) {
   $weather = $doc->xpath("//current_condition/weatherCode/text()");
   $weather = (string)$weather[0];
 
@@ -98,6 +101,13 @@ function weather_code_for_location($city) {
   }
 
   return $code;
+}
+
+function weather_code_for_location($city) {
+  $xml = weather_data_for_location($city);
+  $doc = simplexml_load_string($xml);
+
+  return weather_code_for_doc($doc);
 }
 
 function weather_rabbit_app($db, $rabbit, $app_data, &$data) {
