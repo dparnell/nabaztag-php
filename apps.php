@@ -42,7 +42,7 @@ require('header.php');
 <?php
 $files = scandir(dirname(__FILE__)."/apps");
 foreach($files as $file) {
-  if(preg_match("/(.*)_app\.php/i", $file, $matches)) {
+  if(preg_match("/^(.*)_config\.php$/i", $file, $matches)) {
     $app = $matches[1];
     if(!in_array($app, $configured_apps)) { ?>
     <tr><td><a href="setup_app.php?rabbit=<?php echo $rabbit['mac_id']; ?>&app=<?php echo $app; ?>"><?php echo $app; ?></a></td></tr>
