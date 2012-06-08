@@ -5,7 +5,7 @@ require('lib/rabbit.php');
 $temp_file = tempnam(sys_get_temp_dir(), 'nabaztag');
 file_put_contents($temp_file.".wav", $HTTP_RAW_POST_DATA);
 exec("ffmpeg -i ".$temp_file.".wav -ar 16000 -y ".$temp_file.".flac");
-try {
+
   if(isset($config)) {
     $rabbit = find_rabbit($db, $_REQUEST['sn']);
     
@@ -32,7 +32,7 @@ try {
 	$utterance = $hypotheses[0]->{'utterance'};
 	
 	try {
-	  include('apps/'.$name.'_command.php');
+	  include('apps/'.$utterance.'_command.php');
 	  
 	  call_user_func($utterance."_command", $db, $rabbit);
 	} catch (Exception $e) {
@@ -47,9 +47,7 @@ try {
     $app = array('application' => 'tts', 'data' => serialize(array('text' => $error)));
     save_rabbit_app($db, $rabbit, $app);
   }
-} finally {
-  unlink($temp_file.".wav");
+  unlink($temp_file."2.wav");
   unlink($temp_file.".flac");
-}
 
 ?>

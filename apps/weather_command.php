@@ -3,7 +3,7 @@
 function weather_command($db, $rabbit) {
   $app = app_for_rabbit($db, $rabbit, 'weather');
 
-  if($result['data']) {
+  if($app['data']) {
     $error = null;
 
     require('weather_app.php');
