@@ -47,7 +47,9 @@ exec("ffmpeg -i ".$temp_file.".wav -ar 16000 -y ".$temp_file.".flac");
     $app = array('application' => 'tts', 'data' => serialize(array('text' => $error)));
     save_rabbit_app($db, $rabbit, $app);
   }
-  unlink($temp_file."2.wav");
+
+  unlink($temp_file);
+  unlink($temp_file.".wav");
   unlink($temp_file.".flac");
 
 ?>

@@ -27,12 +27,12 @@ function weather_data_for_location($city) {
 }
 
 function weather_temp_for_doc($doc, $scale = 'C') {
-  $weather = $doc->xpath("//current_condition/temp_".$scale."/text()");
+  $weather = $doc->xpath("//weather/tempMax".$scale."/text()");
   return (string)$weather[0];
 }
 
 function weather_code_for_doc($doc) {
-  $weather = $doc->xpath("//current_condition/weatherCode/text()");
+  $weather = $doc->xpath("//weather/weatherCode/text()");
   $weather = (string)$weather[0];
 
   # weather constants
