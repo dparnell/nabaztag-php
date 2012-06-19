@@ -32,9 +32,14 @@ exec("ffmpeg -i ".$temp_file.".wav -ar 16000 -y ".$temp_file.".flac");
 	$utterance = $hypotheses[0]->{'utterance'};
 	
 	try {
-	  include('apps/'.$utterance.'_command.php');
+	  $to_load = 'apps/'.$utterance.'_command.php';
+	  if(file_exists($APP_DIR.'/'.$to_load)) {
+	    include($to_load);
 	  
-	  call_user_func($utterance."_command", $db, $rabbit);
+	    call_user_func($utterance."_command", $db, $rabbit);
+	  } else {
+	    $error = "I don't know how to: ".$utterance;
+	  }
 	} catch (Exception $e) {
 	  $error = "Error processing command: ".$e->getMessage();
 	}
