@@ -30,20 +30,25 @@ exec("ffmpeg -i ".$temp_file.".wav -ar 16000 -y ".$temp_file.".flac");
 	$data = json_decode($response);
 	$hypotheses = $data->{'hypotheses'};
 	$utterance = $hypotheses[0]->{'utterance'};
-	
-	try {
-	  $to_load = 'apps/'.$utterance.'_command.php';
-	  if(file_exists($APP_DIR.'/'.$to_load)) {
-	    include($to_load);
+	$words = explode(' ', $utterance);
+	$found = false;
+	foreach($words as $word) {
+	  try {
+	    $to_load = 'apps/'.$utterance.'_command.php';
+	    if(file_exists($APP_DIR.'/'.$to_load)) {
+	      $found = true;
+	      include($to_load);
 	  
-	    call_user_func($utterance."_command", $db, $rabbit);
-	  } else {
-	    $error = "I don't know how to: ".$utterance;
+	      call_user_func($utterance."_command", $db, $rabbit);
+	    }
+	  } catch (Exception $e) {
+	    $error = "Error processing command: ".$e->getMessage();
 	  }
-	} catch (Exception $e) {
-	  $error = "Error processing command: ".$e->getMessage();
 	}
 	
+	if(!$found) {
+	  $error = "I don't know how to: ".$utterance;
+	}
       }
     }
   } 
