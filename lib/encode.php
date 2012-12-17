@@ -59,5 +59,18 @@ function encode_message(&$a, $text) {
 
 }
 
+function encode_play_media(&$data, $url) {
+  $msg = array();
+
+  $code = "ID ".time()."\n";
+  $code .= "MU ".$url."\n";
+  $code .= "MW\n";
+
+  encode_message($msg, $code);
+
+  array_push($data, 10);
+  encode_length($data, count($msg));
+  foreach($msg as $e) { array_push($data, $e); }  
+}
 
 ?>

@@ -41,16 +41,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
 }
 
-function app_value($key, $default = null) {
-  global $app_data;
-
-  if(array_key_exists($key, $app_data)) {
-    return $app_data[$key];
-  }
-
-  return $default;
-}
-
 require('header.php');
 
 ?>

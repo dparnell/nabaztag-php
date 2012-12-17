@@ -8,7 +8,7 @@ function weather_data_for_location($city) {
 
   $xml = cache_get($url);
   if($xml == null) {
-    error_log("Fetching weather data for: ".$city);
+//    error_log("Fetching weather data for: ".$city);
 
     $xml = "";
     if ($fp = fopen($url, 'r')) {
@@ -20,7 +20,7 @@ function weather_data_for_location($city) {
 
     cache_put($url, $xml);
   } else {
-    error_log("Using cached weather data for: ".$city);
+//    error_log("Using cached weather data for: ".$city);
   }
 
   return $xml;

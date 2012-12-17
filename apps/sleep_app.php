@@ -10,7 +10,31 @@ function sleep_rabbit_app($db, $rabbit, $app_data, &$data) {
     $flag = 0;
   }
 
-  array_push($data, 0x0b, 0x00, 0x00, 0x01, $flag);  
+  if(app_value('flag', 0) != $flag) {
+    $app_data['flag'] = $flag;
+
+    if($flag) {
+      $to_play = app_value('sleep_sound', '');
+    } else {
+      $to_play = app_value('wake_sound', '');
+    }
+
+    $result = $app_data;
+  } else {
+    $to_play = '';
+    $result = false;
+  }
+
+  if($to_play != '') {
+    encode_play_media($data, $to_play);
+  }
+
+  if($result) {
+    # only add this segment if the value has changed
+    array_push($data, 0x0b, 0x00, 0x00, 0x01, $flag);  
+  }
+
+  return $result;
 }
 
 ?>
