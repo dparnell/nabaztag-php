@@ -4,9 +4,10 @@ function weather_data_for_location($city) {
   // weather condition codes - http://www.worldweatheronline.com/feed/wwoConditionCodes.xml
   // weather query - http://free.worldweatheronline.com/feed/weather.ashx?q=<city here>&format=xml&num_of_days=1&key=<api key here>
 
-  $url = "http://free.worldweatheronline.com/feed/weather.ashx?q=".urlencode($city)."&format=xml&num_of_days=1&key=".config_value('app-weather-api-key');
+  //  $url = "http://free.worldweatheronline.com/feed/weather.ashx?q=".urlencode($city)."&format=xml&num_of_days=1&key=".config_value('app-weather-api-key');
+  $url = "http://api.worldweatheronline.com/free/v1/weather.ashx?q=".urlencode($city)."&format=xml&num_of_days=1&key=".config_value('app-weather-api-key');
 
-  $xml = cache_get($url);
+    $xml = cache_get($url);
   if($xml == null) {
 //    error_log("Fetching weather data for: ".$city);
 
