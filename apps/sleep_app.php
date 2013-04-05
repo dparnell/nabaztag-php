@@ -29,10 +29,7 @@ function sleep_rabbit_app($db, $rabbit, $app_data, &$data) {
     encode_play_media($data, $to_play);
   }
 
-  if($result) {
-    # only add this segment if the value has changed
-    array_push($data, 0x0b, 0x00, 0x00, 0x01, $flag);  
-  }
+  array_push($data, 0x0b, 0x00, 0x00, 0x01, $flag);  
 
   return $result;
 }
