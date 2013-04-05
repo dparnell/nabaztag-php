@@ -1,6 +1,6 @@
 Options +FollowSymlinks
 RewriteEngine on
 
-# The Nabaztag firmware looks for JSP files, but we are using jsp
+# The Nabaztag firmware looks for JSP files, but we are using PHP
 RewriteRule (.*)\.jsp $1.php [NC]
 
