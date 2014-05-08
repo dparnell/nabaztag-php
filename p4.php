@@ -28,7 +28,7 @@ foreach($apps as $app) {
     include('apps/'.$name.'_app.php');
     $app_data = unserialize($app['data']);
   
-    $result = call_user_func($name."_rabbit_app", $db, $rabbit, $app_data, &$data);
+    $result = call_user_func($name."_rabbit_app", $db, $rabbit, $app_data, $data);
 
     if($result) {
       $app['data'] = serialize($result);
