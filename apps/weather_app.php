@@ -111,16 +111,17 @@ function weather_code_for_location($city) {
   return weather_code_for_doc($doc);
 }
 
-function weather_rabbit_app($db, $rabbit, $app_data, &$data) {
+function weather_rabbit_app($db, $rabbit, $app_data) {
+  global $ping_result_data;
   $code = weather_code_for_location($app_data['city']);
 
   $ambient = array();
   encode_set_ambient($ambient, 1, $code);
 
-  array_push($data, 4);
-  encode_length($data, count($ambient) + 4);
-  array_push($data, 0, 0, 0, 0);
-  foreach($ambient as $e) { array_push($data, $e); }
+  array_push($ping_result_data, 4);
+  encode_length($ping_result_data, count($ambient) + 4);
+  array_push($ping_result_data, 0, 0, 0, 0);
+  foreach($ambient as $e) { array_push($ping_result_data, $e); }
 
 }
 

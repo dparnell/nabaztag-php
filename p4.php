@@ -15,10 +15,10 @@ if(isset($config)) {
 }
 
 # Ping request from a rabbit
-$data = array(0x7f);
+$ping_result_data = array(0x7f);
 
 # encode ping interval block
-array_push($data, 0x03, 0x00, 0x00, 0x01, 10);
+array_push($ping_result_data, 0x03, 0x00, 0x00, 0x01, 10);
 
 foreach($apps as $app) {
   $name = $app['application'];
@@ -28,7 +28,7 @@ foreach($apps as $app) {
     include('apps/'.$name.'_app.php');
     $app_data = unserialize($app['data']);
   
-    $result = call_user_func($name."_rabbit_app", $db, $rabbit, $app_data, $data);
+    $result = call_user_func($name."_rabbit_app", $db, $rabbit, $app_data);
 
     if($result) {
       $app['data'] = serialize($result);
@@ -47,9 +47,9 @@ foreach($apps as $app) {
 }
 
 # encode end of data
-array_push($data, 0xff, 0x0a);
+array_push($ping_result_data, 0xff, 0x0a);
 
-echo encode_array($data);
+echo encode_array($ping_result_data);
 
 if($rabbit) {
   finished_rabbit($db, $rabbit);

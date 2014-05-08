@@ -1,6 +1,7 @@
 <?php
 
-function tts_rabbit_app($db, $rabbit, $app_data, &$data) {
+function tts_rabbit_app($db, $rabbit, $app_data) {
+  global $ping_result_data;
   // http://translate.google.com/translate_tts?q=<the text we want to hear>
 
   $code = "ID ".time()."\n";
@@ -9,9 +10,9 @@ function tts_rabbit_app($db, $rabbit, $app_data, &$data) {
   $msg = array();
   encode_message($msg, $code);
 
-  array_push($data, 10);
-  encode_length($data, count($msg));
-  foreach($msg as $e) { array_push($data, $e); }  
+  array_push($ping_result_data, 10);
+  encode_length($ping_result_data, count($msg));
+  foreach($msg as $e) { array_push($ping_result_data, $e); }  
 }
 
 ?>

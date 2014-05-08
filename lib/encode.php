@@ -59,7 +59,8 @@ function encode_message(&$a, $text) {
 
 }
 
-function encode_play_media(&$data, $url) {
+function encode_play_media($url) {
+  global $ping_result_data;
   $msg = array();
 
   $code = "ID ".time()."\n";
@@ -68,9 +69,9 @@ function encode_play_media(&$data, $url) {
 
   encode_message($msg, $code);
 
-  array_push($data, 10);
-  encode_length($data, count($msg));
-  foreach($msg as $e) { array_push($data, $e); }  
+  array_push($ping_result_data, 10);
+  encode_length($ping_result_data, count($msg));
+  foreach($msg as $e) { array_push($ping_result_data, $e); }  
 }
 
 ?>

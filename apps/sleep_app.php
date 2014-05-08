@@ -1,6 +1,8 @@
 <?php
 
-function sleep_rabbit_app($db, $rabbit, $app_data, &$data) {
+function sleep_rabbit_app($db, $rabbit, $app_data) {
+  global $ping_result_data;
+
   $now = time();
   $sleep_time = strtotime($app_data['sleep_time']);
   $wake_time = strtotime($app_data['wake_time']);
@@ -26,10 +28,10 @@ function sleep_rabbit_app($db, $rabbit, $app_data, &$data) {
   }
 
   if($to_play != '') {
-    encode_play_media($data, $to_play);
+    encode_play_media($to_play);
   }
 
-  array_push($data, 0x0b, 0x00, 0x00, 0x01, $flag);  
+  array_push($ping_result_data, 0x0b, 0x00, 0x00, 0x01, $flag);  
 
   return $result;
 }
