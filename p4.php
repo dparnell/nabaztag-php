@@ -6,7 +6,7 @@ require('lib/rabbit.php');
 
 if(isset($config)) {
   $rabbit = find_rabbit($db, $_REQUEST['sn']);
-
+  date_default_timezone_set($config['server-timezone']);
   $apps = apps_for_rabbit($db, $rabbit);
 } else {
   $rabbit = false;
@@ -27,7 +27,7 @@ foreach($apps as $app) {
   try {
     include('apps/'.$name.'_app.php');
     $app_data = unserialize($app['data']);
-  
+
     $result = call_user_func($name."_rabbit_app", $db, $rabbit, $app_data);
 
     if($result) {
@@ -38,7 +38,7 @@ foreach($apps as $app) {
     $success = false;
     error_log("Something went wrong in an app: ".$e->getMessage());
   }
-  
+
   if($app['reschedule_interval'] && $success) {
     reschedule_rabbit_app($db, $app);
   } else {

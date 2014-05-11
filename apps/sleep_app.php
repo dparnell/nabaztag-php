@@ -3,7 +3,7 @@
 function sleep_rabbit_app($db, $rabbit, $app_data) {
   global $ping_result_data;
 
-  $now = time();
+  $now = strtotime("now");
   $sleep_time = strtotime($app_data['sleep_time']);
   $wake_time = strtotime($app_data['wake_time']);
   if($now > $sleep_time || $now < $wake_time) {
@@ -31,7 +31,7 @@ function sleep_rabbit_app($db, $rabbit, $app_data) {
     encode_play_media($to_play);
   }
 
-  array_push($ping_result_data, 0x0b, 0x00, 0x00, 0x01, $flag);  
+  array_push($ping_result_data, 0x0b, 0x00, 0x00, 0x01, $flag);
 
   return $result;
 }
