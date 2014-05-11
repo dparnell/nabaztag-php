@@ -2,18 +2,22 @@
 require('app.php');
 require('lib/rabbit.php');
 
+$SAMPLE_RATE = 44100;
+$KEY = "AIzaSyCnl6MRydhw_5fLXIdASxkLJzcJh5iX0M4";
+
 $temp_file = tempnam(sys_get_temp_dir(), 'nabaztag');
 file_put_contents($temp_file.".wav", $HTTP_RAW_POST_DATA);
-exec("ffmpeg -i ".$temp_file.".wav -ar 16000 -y ".$temp_file.".flac");
+
+exec("ffmpeg -i ".$temp_file.".wav -ar ".$SAMPLE_RATE." -y ".$temp_file.".flac");
 if(!file_exists($temp_file.".flac")) {
   # try avconv instead
-  exec("avconv -i ".$temp_file.".wav -ar 16000 -y ".$temp_file.".flac");
+  exec("avconv -i ".$temp_file.".wav -ar ".$SAMPLE_RATE." -y ".$temp_file.".flac");
 }
 
 if(isset($config)) {
   $rabbit = find_rabbit($db, $_REQUEST['sn']);
 
-  $url = "http://www.google.com/speech-api/v1/recognize?xjerr=1&client=nabaztag-php&lang=en-US&maxresults=10";
+  $url = "http://www.google.com/speech-api/v2/recognize?output=json&lang=en_US&key=".$KEY;
   $flac_file = file_get_contents($temp_file.".flac");
   $flac_size = filesize($temp_file.".flac");
 
@@ -21,7 +25,7 @@ if(isset($config)) {
   curl_setopt_array($curl, array(
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_URL => $url,
-    CURLOPT_HTTPHEADER => array("Content-Type: audio/x-flac; rate=16000", "Content-Length: $flac_size", "Expect:"),
+    CURLOPT_HTTPHEADER => array("Content-Type: audio/x-flac; rate=".$SAMPLE_RATE, "Content-Length: $flac_size", "Expect:"),
     CURLOPT_POST => true,
     CURLOPT_POSTFIELDS => $flac_file
   ));
@@ -31,26 +35,29 @@ if(isset($config)) {
   if (!$response) {
     $error = "Could not send data for recognition: ".$php_errormsg;
   } else {
-    error_log($response);
+#    error_log($response);
 
     if ($response === false) {
       $error = "Could not read response: ".$php_errormsg;
     } else {
       $error = null;
 
-      $data = json_decode($response);
-      $hypotheses = $data->{'hypotheses'};
-      $utterance = $hypotheses[0]->{'utterance'};
-      $words = explode(' ', $utterance);
+      $parts = split("\n", $response);
+
+      $data = json_decode($parts[1]);
+      $result = $data->{'result'};
+      $alternatives = $result[0]->{'alternative'};
+      $transcript = $alternatives[0]->{'transcript'};
+      $words = explode(' ', $transcript);
       $found = false;
       foreach($words as $word) {
         try {
-          $to_load = 'apps/'.$utterance.'_command.php';
+          $to_load = 'apps/'.$word.'_command.php';
           if(file_exists($APP_DIR.'/'.$to_load)) {
             $found = true;
             include($to_load);
 
-            call_user_func($utterance."_command", $db, $rabbit);
+            call_user_func($word."_command", $db, $rabbit);
           }
         } catch (Exception $e) {
           $error = "Error processing command: ".$e->getMessage();
@@ -58,7 +65,7 @@ if(isset($config)) {
       }
 
       if(!$found) {
-        $error = "I don't know how to: ".$utterance;
+        $error = "I don't know how to: ".$transcript;
       }
     }
   }
