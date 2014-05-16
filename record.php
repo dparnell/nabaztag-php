@@ -3,7 +3,7 @@ require('app.php');
 require('lib/rabbit.php');
 
 $SAMPLE_RATE = 44100;
-$KEY = "AIzaSyCnl6MRydhw_5fLXIdASxkLJzcJh5iX0M4";
+$KEY = "AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw";
 
 $temp_file = tempnam(sys_get_temp_dir(), 'nabaztag');
 file_put_contents($temp_file.".wav", $HTTP_RAW_POST_DATA);
