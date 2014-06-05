@@ -9,8 +9,11 @@
     <link href="css/bootstrap-responsive.css" rel="stylesheet"/>
     <link href="css/docs.css" rel="stylesheet"/>
 
-    <link href="css/jquery.mobile-1.0.1.css" rel="stylesheet"/>
-    <link href="css/jquery.mobile.structure-1.0.1.css" rel="stylesheet"/>    
+    <link href="css/jquery.mobile.css" rel="stylesheet"/>
+    <link href="css/jquery.mobile.structure.css" rel="stylesheet"/>    
+    <link href="css/jquery.mobile.theme.css" rel="stylesheet"/>    
+
+    <link href="css/app.css" rel="stylesheet"/>    
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -18,7 +21,7 @@
     <![endif]-->
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
-    <script type="text/javascript" src="js/jquery.mobile-1.0.1.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile.js"></script>
     <script type="text/javascript" src="js/jquery.validate.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
   </head>

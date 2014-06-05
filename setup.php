@@ -85,9 +85,11 @@ require('header.php'); ?>
     <fieldset data-role="controlgroup">
       <legend>Where do you want to store your data:</legend>
       <?php if(is_writable($dir."/db")) { ?>
-      <input type="radio" name="db" value="sqlite" id="use-sqlite" checked="checked"/><label for="use-sqlite">Use auto-configured SQlite database</label>
+      <input type="radio" name="db" value="sqlite" id="use-sqlite" checked="checked"/>
+	  <label for="use-sqlite">Use auto-configured SQlite database</label>
       <?php } else { ?>
-      <input type="radio" name="db" value="sqlite-not-available" id="use-sqlite" disabled="disabled"/><label for="use-sqlite">Use auto-configured SQlite database - not available as <?php echo $dir."/db" ?> is not writable</label>
+      <input type="radio" name="db" value="sqlite-not-available" id="use-sqlite" disabled="disabled"/>
+	  <label for="use-sqlite" class="error">Use auto-configured SQlite database - not available as <?php echo $dir."/db" ?> is not writable</label>
       <?php } ?>
       <input type="radio" name="db" value="other" id="use-other"/><label for="use-other">Configure database connection manually</label>
     </fieldset>
@@ -102,12 +104,18 @@ require('header.php'); ?>
     </fieldset>
     <fieldset data-role="controlgroup">
       <legend>Administrator User Details:</legend>
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username" class="required"/>
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" class="required"/>
-      <label for="confirm">Confirm:</label>
-      <input type="password" name="confirm" id="confirm" class="required"/>
+      <div data-role="fieldcontain">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" class="required"/>
+      </div>
+      <div data-role="fieldcontain">
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" class="required"/>
+      </div>
+      <div data-role="fieldcontain">
+        <label for="confirm">Confirm:</label>
+        <input type="password" name="confirm" id="confirm" class="required"/>
+      </div>
     </fieldset>
     <?php } ?>
     <fieldset data-role="controlgroup">
@@ -117,8 +125,10 @@ require('header.php'); ?>
 
     <fieldset data-role="controlgroup">
       <legend>Media:</legend>
-      <label for="app-media-base">Base URL for media files:</label>
-      <input type="text" name="app-media-base" id="app-media-base" value="<?php echo config_value('app-media-base', 'http://karotz.s3.amazonaws.com/applications/'); ?>"/>
+      <div data-role="fieldcontain">
+        <label for="app-media-base">Base URL for media files:</label>
+        <input type="text" name="app-media-base" id="app-media-base" value="<?php echo config_value('app-media-base', 'http://karotz.s3.amazonaws.com/applications/'); ?>"/>
+      </div>
     </fieldset>
     
 <?php 

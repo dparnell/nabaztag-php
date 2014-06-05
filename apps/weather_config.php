@@ -3,8 +3,10 @@
 
 <fieldset data-role="controlgroup">
    <legend>Weather App Setup:</legend>
-   <label for="city">City</label>
-   <input type="text" name="city" id="city" value="<?php echo app_value('city'); ?>"/>   
+   <div data-role="fieldcontain">
+     <label for="city">City</label>
+     <input type="text" name="city" id="city" value="<?php echo app_value('city'); ?>"/>
+   </div>
 </fieldset>
 
 <fieldset data-role="controlgroup">
