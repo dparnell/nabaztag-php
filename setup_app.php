@@ -15,7 +15,7 @@ $app = app_for_rabbit($db, $rabbit, $_REQUEST['app']);
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
   // we need to save the data!
   $app_data = array();
-  foreach($HTTP_POST_VARS as $key => $value) {
+  foreach($_POST as $key => $value) {
     if($key == 'submit') {
       // do nothing
     } else if($key == 'next_update') {
@@ -55,7 +55,7 @@ require('header.php');
 <div class="marketing">
   <h1>Configure <?php echo $_REQUEST['app']; ?></h1>
   <form method="post" action="setup_app.php?rabbit=<?php echo $_REQUEST['rabbit']; ?>&app=<?php echo $_REQUEST['app']; ?>" id="app-setup-form" data-ajax="false" class="ui-body ui-body-b ui-corner-all">
-  
+
     <?php require('apps/'.$_REQUEST['app'].'_config.php'); ?>
 
     <fieldset data-role="controlgroup">
@@ -64,4 +64,3 @@ require('header.php');
   </form>
 </div>
 <?php require('footer.php'); ?>
-
