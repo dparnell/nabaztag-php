@@ -15,7 +15,7 @@ $app = app_for_rabbit($db, $rabbit, $_REQUEST['app']);
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
   // we need to save the data!
   $app_data = array();
-  foreach($_POST as $key => $value) {
+  foreach($HTTP_POST_VARS as $key => $value) {
     if($key == 'submit') {
       // do nothing
     } else if($key == 'next_update') {

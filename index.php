@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once('app.php');
 require('header.php');
 require('lib/rabbit.php');

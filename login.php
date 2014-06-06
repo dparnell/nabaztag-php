@@ -8,7 +8,7 @@ if(!isset($config)) {
 require_once('lib/db.php');
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $user = attempt_login($db, $config, $_POST['username'], $_POST['password']);
+  $user = attempt_login($db, $config, $_REQUEST['username'], $_REQUEST['password']);
 
   if($user) {
     $info = "Login successful";
@@ -36,17 +36,20 @@ require_once('header.php');
   </div>
 </header>
 <hr class="soften">
-
 <div class="marketing">
   <h1>Please log in to your Nabaztag Server.</h1>
-  
+
   <form method="post" action="login.php" data-ajax="false" class="ui-body ui-body-b ui-corner-all">
     <fieldset data-role="controlgroup">
       <legend>Login Details</legend>
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username"/>
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password"/>
+      <div data-role="fieldcontain">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username"/>
+      </div>
+      <div data-role="fieldcontain">
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password"/>
+      </div>
     </fieldset>
     <input type="submit" name="submit" value="Login" id="submit" data-role="none" class="btn button"/>
   </form>

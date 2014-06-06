@@ -13,31 +13,31 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $config = array();
     $config['password-salt'] = sha1(date('l jS \of F Y h:i:s A').mt_rand().mt_rand());
 
-    if($_POST['db'] == 'sqlite') {
+    if($_REQUEST['db'] == 'sqlite') {
       $dir = dirname(__FILE__)."/db";
-      
-      $config['connect-string'] = "sqlite:/$dir/nabaztag.sqlite3";
+
+      $config['connect-string'] = "sqlite:/".$dir."/nabaztag.sqlite3";
     } else {
-      $config['connect-string'] = $_POST['connect-string'];
-      $config['db-user'] = $_POST['db-user'];
-      $config['db-password'] = $_POST['db-password'];
+      $config['connect-string'] = $_REQUEST['connect-string'];
+      $config['db-user'] = $_REQUEST['db-user'];
+      $config['db-password'] = $_REQUEST['db-password'];
     }
-    
-    if($_POST['password'] != $_POST['confirm']) {
+
+    if($_POST['password'] != $_REQUEST['confirm']) {
       $error = "Password and password confirmation do not match";
     }
 
   }
 
-  $config['server-timezone'] = $_POST['server-timezone'];
+  $config['server-timezone'] = $_REQUEST['server-timezone'];
 
   foreach($_POST as $key => $value) {
-    if(strpos($key, 'app-') == 0) {
+    if(strpos($key, 'app-') === 0) {
       $config[$key] = $value;
     }
   }
 
-  require_once('lib/db.php');  
+  require_once('lib/db.php');
 
   if(isset($error)) {
     unset($config);
@@ -46,7 +46,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
       save_config($config);
 
       if(!logged_in()) {
-	create_user($db, $config, $_POST['username'], $_POST['password'], true);
+        create_user($db, $config, $_REQUEST['username'], $_REQUEST['password'], true);
       }
       $info = "Configuration successful";
     }
@@ -98,7 +98,7 @@ require('header.php'); ?>
       <label for="connect-string">PDO Connect String (<a href="http://www.electrictoolbox.com/php-pdo-dsn-connection-string/" target="_blank">Help</a>):</label>
       <input type="text" name="connect-string" id="connect-string" />
       <label for="db-user">Database Username:</label>
-      <input type="text" name="db-user" id="db-user" />
+      <input type="text" name="db-user" id="db-user" value="<?php echo $_REQUEST['db-user']; ?>" />
       <label for="db-password">Database Password:</label>
       <input type="password" name="db-password" id="db-password" />
     </fieldset>
@@ -130,8 +130,8 @@ require('header.php'); ?>
         <input type="text" name="app-media-base" id="app-media-base" value="<?php echo config_value('app-media-base', 'http://karotz.s3.amazonaws.com/applications/'); ?>"/>
       </div>
     </fieldset>
-    
-<?php 
+
+<?php
     $dir = dirname(__FILE__)."/apps";
     $setup_files = scandir($dir);
     foreach($setup_files as $file) {

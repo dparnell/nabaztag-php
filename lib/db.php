@@ -38,7 +38,7 @@ function install_database_tables($db) {
 	if(in_array($migration, $versions) == false) {
 	  # we need to install this migration
 	  $sql = file_get_contents($dir."/".$migration);
-	  
+
 	  foreach(explode(";", $sql) as $statement) {
 	    $statement = trim($statement);
 	    if($statement != "") {
@@ -50,7 +50,7 @@ function install_database_tables($db) {
 	  $db->exec("insert into schema_migrations(version) values ('$migration')");
 	}
       }
-    } 
+    }
   } catch(PDOException $e) {
     return false;
   }
@@ -96,7 +96,7 @@ function rabbits($db) {
 
   $st = $db->prepare($sql." order by name");
   $st->execute(array(current_user_id()));
-  
+
   return $st->fetchAll(PDO::FETCH_ASSOC);
 }
 
