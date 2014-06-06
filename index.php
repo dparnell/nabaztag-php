@@ -10,11 +10,11 @@ $rabbits = rabbits($db);
   ?>
   <h1>My Rabbits</h1>
   <table class="ui-body ui-body-b ui-corner-all">
-    <tr><th class="ui-controlgroup-label">Rabbit</th><th class="ui-controlgroup-label">Status</th></tr>
+    <tr><th class="ui-label">Rabbit</th><th class="ui-label">Status</th></tr>
     <?php foreach($rabbits as $rabbit) { ?>
     <tr>
-      <td class="ui-controlgroup-label"><a href="apps.php?rabbit=<?php echo rabbit_mac($rabbit); ?>"><?php echo rabbit_name($rabbit); ?></a></td>
-      <td class="ui-controlgroup-label"><?php echo rabbit_status($rabbit); ?></td>
+      <td class="ui-label"><a href="apps.php?rabbit=<?php echo rabbit_mac($rabbit); ?>"><?php echo rabbit_name($rabbit); ?></a></td>
+      <td class="ui-label"><?php echo rabbit_status($rabbit); ?></td>
     </tr>
     <?php } ?>
   </table>

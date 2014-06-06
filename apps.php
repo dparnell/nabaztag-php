@@ -26,10 +26,10 @@ require('header.php');
   <h1>Apps for your rabbit</h1>
 <?php $apps = apps_for_rabbit($db, $rabbit); ?>
   <table class="ui-body ui-body-b ui-corner-all">
-    <tr><th class="ui-controlgroup-label">Application</th><th class="ui-controlgroup-label">Next Update</th><th class="ui-controlgroup-label">Interval</th></tr>
+    <tr><th class="ui-label">Application</th><th class="ui-label">Next Update</th><th class="ui-label">Interval</th></tr>
   <?php
   $configured_apps = array();
-  foreach($apps as $app) { 
+  foreach($apps as $app) {
     array_push($configured_apps, $app['application']);
   ?>
     <tr><td><a href="setup_app.php?rabbit=<?php echo $rabbit['mac_id']; ?>&app=<?php echo $app['application']; ?>"><?php echo app_name($app); ?></a></td><td><?php echo app_next_update_time($app); ?></td><td><?php echo app_update_interval($app); ?></td></tr>
@@ -55,4 +55,3 @@ foreach($files as $file) {
   </table>
 </div>
 <?php require('footer.php'); ?>
-
