@@ -60,6 +60,7 @@ foreach($apps as $app) {
 # encode end of data
 array_push($ping_result_data, 0xff, 0x0a);
 
+#hex_dump(encode_array($ping_result_data));
 echo encode_array($ping_result_data);
 
 if($rabbit) {

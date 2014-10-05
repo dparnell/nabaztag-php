@@ -105,7 +105,11 @@ function remove_rabbit_app($db, $app) {
 
 function reschedule_rabbit_app($db, $app) {
     $interval = $app['reschedule_interval'];
-    $next_update = time() + $interval;
+    $next_update = $app['next_update'] + $interval;
+    while($next_update < time()) {
+        $next_update += $interval;
+    }
+
     $on_days = $app['on_days'];
     if($on_days) {
         $day = getdate($next_update);

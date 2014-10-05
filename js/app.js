@@ -24,9 +24,9 @@ function handle_days($on_days) {
         $day.data('day', i);
 
         if(v & (1 << i)) {
-            $dat.prop('checked', true);
+            $day.attr('checked', true).checkboxradio("refresh");;
         } else {
-            $day.prop('checked', false);
+            $day.attr('checked', false).checkboxradio("refresh");;
         }
 
         $day.click(handle_day_click);
