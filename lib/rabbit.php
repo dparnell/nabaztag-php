@@ -90,6 +90,7 @@ function app_for_rabbit_by_name($db, $rabbit, $app_name) {
         $result['application'] = $app_name;
         $result['next_update'] = null;
         $result['reshedule_interval'] = null;
+        $result['on_days'] = null;
         $result['data'] = null;
     }
 
@@ -103,8 +104,19 @@ function remove_rabbit_app($db, $app) {
 }
 
 function reschedule_rabbit_app($db, $app) {
-    $st = $db->prepare("update apps set next_update=?+reschedule_interval where id=?");
-    $st->execute(array(time(), $app['id']));
+    $interval = $app['reschedule_interval'];
+    $next_update = time() + $interval;
+    $on_days = $app['on_days'];
+    if($on_days) {
+        $day = getdate($next_update);
+        while(((1<<$day['wday']) & $on_days) == 0) {
+            $next_update += + $interval;
+            $day = getdate($next_update);
+        }
+    }
+
+    $st = $db->prepare("update apps set next_update=? where id=?");
+    $st->execute(array($next_update, $app['id']));
 }
 
 function app_name($app) {
@@ -130,11 +142,11 @@ function save_rabbit_app($db, $rabbit, $app) {
     }
 
     if(array_key_exists('id', $app)) {
-        $st = $db->prepare("update apps set data=?, next_update=?, reschedule_interval=? where id=?");
-        $st->execute(array($app['data'], $app['next_update'], $app['reschedule_interval'], $app['id']));
+        $st = $db->prepare("update apps set data=?, next_update=?, reschedule_interval=?, on_days=? where id=?");
+        $st->execute(array($app['data'], $app['next_update'], $app['reschedule_interval'], $app['on_days'], $app['id']));
     } else {
-        $st = $db->prepare("insert into apps (rabbit_id, application, next_update, reschedule_interval, data) values (?, ?, ?, ?, ?)");
-        $st->execute(array($rabbit['id'], $app['application'], $app['next_update'], $app['reschedule_interval'], $app['data']));
+        $st = $db->prepare("insert into apps (rabbit_id, application, next_update, reschedule_interval, on_days, data) values (?, ?, ?, ?, ?, ?)");
+        $st->execute(array($rabbit['id'], $app['application'], $app['next_update'], $app['reschedule_interval'], $app['on_days'], $app['data']));
     }
 }
 
@@ -153,7 +165,11 @@ function app_update_interval($app) {
             return floor($interval/60).' minutes';
         }
 
-        return floor($interval/(60*60)).' hours';
+        if($interval < 24*60*60) {
+            return floor($interval/(60*60)).' hours';
+        }
+
+        return floor($interval/(24*60*60)).' days';
     }
 
     return 'Once off';

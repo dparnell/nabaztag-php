@@ -22,6 +22,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
       $app['next_update'] = strtotime($value);
     } else if($key == 'interval') {
       $app['reschedule_interval'] = $value;
+    } else if($key == 'on_days') {
+      $app['on_days'] = $value;
     } else {
       $app_data[$key] = $value;
     }
