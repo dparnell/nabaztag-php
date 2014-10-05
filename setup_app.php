@@ -8,7 +8,7 @@ if(!logged_in()) {
 }
 
 require_once('lib/db.php');
-require('lib/rabbit.php');
+require_once('lib/rabbit.php');
 $rabbit = find_rabbit($db, $_REQUEST['rabbit']);
 $app = app_for_rabbit($db, $rabbit, $_REQUEST['app']);
 
@@ -43,7 +43,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 require('header.php');
 
+$app_name = $app['application'];
 ?>
+
 <header class="jumbotron masthead">
   <div class="inner">
     <h1>Nabaztag Server</h1>
@@ -51,12 +53,11 @@ require('header.php');
   </div>
 </header>
 <hr class="soften">
-
 <div class="marketing">
-  <h1>Configure <?php echo $_REQUEST['app']; ?></h1>
+  <h1>Configure <?php echo $app_name; ?></h1>
   <form method="post" action="setup_app.php?rabbit=<?php echo $_REQUEST['rabbit']; ?>&app=<?php echo $_REQUEST['app']; ?>" id="app-setup-form" data-ajax="false" class="ui-body ui-body-b ui-corner-all">
 
-    <?php require('apps/'.$_REQUEST['app'].'_config.php'); ?>
+    <?php require('apps/'.$app_name.'_config.php'); ?>
 
     <fieldset data-role="controlgroup">
       <input type="submit" name="submit" value="Save" id="submit" data-role="none" class="btn button"/>

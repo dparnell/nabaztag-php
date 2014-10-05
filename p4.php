@@ -7,7 +7,7 @@ require('lib/rabbit.php');
 if(isset($config)) {
   $rabbit = find_rabbit($db, $_REQUEST['sn']);
   date_default_timezone_set($config['server-timezone']);
-  $apps = apps_for_rabbit($db, $rabbit);
+  $apps = scheduled_apps_for_rabbit($db, $rabbit);
 } else {
   $rabbit = false;
 

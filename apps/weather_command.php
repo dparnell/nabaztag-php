@@ -1,7 +1,7 @@
 <?php
 
 function weather_command($db, $rabbit) {
-  $app = app_for_rabbit($db, $rabbit, 'weather');
+  $app = app_for_rabbit_by_name($db, $rabbit, 'weather');
 
   if($app['data']) {
     $error = null;
@@ -9,7 +9,7 @@ function weather_command($db, $rabbit) {
     require('weather_app.php');
 
     $app_data = unserialize($app['data']);
-    
+
     $base = config_value('app-media-base');
     if($base) {
       $xml = weather_data_for_location($app_data['city']);
@@ -29,7 +29,7 @@ function weather_command($db, $rabbit) {
       $code .= "MW\n";
       $code .= "MU ".$base."weather/".$lang."/degree.mp3\n";
       $code .= "MW\n";
-      
+
       $app = array('application' => 'message', 'data' => serialize(array('code' => $code)));
       save_rabbit_app($db, $rabbit, $app);
     } else {

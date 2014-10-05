@@ -1,5 +1,7 @@
 <?php
 
+$multi_instance_apps = [];
+
 function logged_in() {
   return isset($_SESSION) and array_key_exists('user', $_SESSION);
 }
@@ -58,7 +60,7 @@ function is_cache_available() {
 
 function cache_get($key, $max_age = 3600) {
   $cache_file = cache_dir().'/'.sha1($key);
-  
+
   if(file_exists($cache_file)) {
     $access_time = filemtime($cache_file);
     if($access_time && time()-$access_time < $max_age) {

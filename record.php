@@ -55,7 +55,7 @@ if(isset($config)) {
           $to_load = 'apps/'.$word.'_command.php';
           if(file_exists($APP_DIR.'/'.$to_load)) {
             $found = true;
-            include($to_load);
+            require_once($to_load);
 
             call_user_func($word."_command", $db, $rabbit);
           }

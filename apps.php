@@ -8,7 +8,7 @@ if(!logged_in()) {
 }
 
 require_once('lib/db.php');
-require('lib/rabbit.php');
+require_once('lib/rabbit.php');
 $rabbit = find_rabbit($db, $_REQUEST['rabbit']);
 
 require('header.php');
@@ -32,7 +32,7 @@ require('header.php');
   foreach($apps as $app) {
     array_push($configured_apps, $app['application']);
   ?>
-    <tr><td><a href="setup_app.php?rabbit=<?php echo $rabbit['mac_id']; ?>&app=<?php echo $app['application']; ?>"><?php echo app_name($app); ?></a></td><td><?php echo app_next_update_time($app); ?></td><td><?php echo app_update_interval($app); ?></td></tr>
+    <tr><td><a href="setup_app.php?rabbit=<?php echo $rabbit['mac_id']; ?>&app=<?php echo $app['id']; ?>"><?php echo app_name($app); ?></a></td><td><?php echo app_next_update_time($app); ?></td><td><?php echo app_update_interval($app); ?></td></tr>
   <?php } ?>
   </table>
 
@@ -40,11 +40,15 @@ require('header.php');
   <table class="ui-body ui-body-b ui-corner-all">
     <tr><th class="ui-controlgroup-label">Application</th></tr>
 <?php
-$files = scandir(dirname(__FILE__)."/apps");
+$apps_dir = dirname(__FILE__)."/apps";
+$files = scandir($apps_dir);
+
 foreach($files as $file) {
   if(preg_match("/^(.*)_config\.php$/i", $file, $matches)) {
     $app = $matches[1];
-    if(!in_array($app, $configured_apps)) { ?>
+    require_once($apps_dir."/".$app."_app.php");
+
+    if(!in_array($app, $configured_apps) || in_array($app, $multi_instance_apps)) { ?>
     <tr><td><a href="setup_app.php?rabbit=<?php echo $rabbit['mac_id']; ?>&app=<?php echo $app; ?>"><?php echo $app; ?></a></td></tr>
 <?php
     }
