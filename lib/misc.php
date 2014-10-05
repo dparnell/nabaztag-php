@@ -1,6 +1,7 @@
 <?php
 
 $multi_instance_apps = [];
+$sleepy_instance_apps = [];
 
 function logged_in() {
   return isset($_SESSION) and array_key_exists('user', $_SESSION);
@@ -91,6 +92,21 @@ function app_value($key, $default = null) {
   }
 
   return $default;
+}
+
+function process_url($url) {
+    return preg_replace_callback("/\{([^\}]+)\}/", function($matches) {
+        print_r($matches);
+        $parts = explode(' ', $matches[1]);
+        switch($parts[0]) {
+        case "random":
+            return rand(0, $parts[1]);
+        case "choose":
+            return $parts[rand(1, count($parts)-1)];
+        case "hour":
+            return getdate(time())['hours'];
+        }
+    }, $url);
 }
 
 ?>

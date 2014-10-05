@@ -23,8 +23,8 @@ function find_rabbit($db, $mac) {
 }
 
 function finished_rabbit($db, $rabbit) {
-    $st = $db->prepare("update rabbits set last_seen=? where id=?");
-    $st->execute(array(time(), $rabbit['id']));
+    $st = $db->prepare("update rabbits set last_seen=?, asleep=? where id=?");
+    $st->execute(array(time(), $rabbit['asleep'], $rabbit['id']));
 }
 
 function rabbit_mac($rabbit) {

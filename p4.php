@@ -27,25 +27,32 @@ foreach($apps as $app) {
   if(!array_key_exists($name, $seen_apps)) {
       $seen_apps[$name] = true;
       $success = true;
+      $app_ran = false;
       try {
-          include('apps/'.$name.'_app.php');
-          $app_data = unserialize($app['data']);
+          require_once('apps/'.$name.'_app.php');
 
-          $result = call_user_func($name."_rabbit_app", $db, $rabbit, $app_data);
+          if(($rabbit['asleep'] == 0) || in_array($name, $sleepy_instance_apps)) {
+              $app_ran = true;
+              $app_data = unserialize($app['data']);
 
-          if($result) {
-              $app['data'] = serialize($result);
-              save_rabbit_app($db, $rabbit, $app);
+              $result = call_user_func($name."_rabbit_app", $db, $rabbit, $app_data);
+
+              if($result) {
+                  $app['data'] = serialize($result);
+                  save_rabbit_app($db, $rabbit, $app);
+              }
           }
       } catch (Exception $e) {
           $success = false;
           error_log("Something went wrong in an app: ".$e->getMessage());
       }
 
-      if($app['reschedule_interval'] && $success) {
-          reschedule_rabbit_app($db, $app);
-      } else {
-          remove_rabbit_app($db, $app);
+      if($app_ran) {
+          if($app['reschedule_interval'] && $success) {
+              reschedule_rabbit_app($db, $app);
+          } else {
+              remove_rabbit_app($db, $app);
+          }
       }
   }
 }

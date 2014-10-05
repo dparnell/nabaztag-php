@@ -1,39 +1,43 @@
 <?php
 
+array_push($sleepy_instance_apps, 'sleep');
+
 function sleep_rabbit_app($db, $rabbit, $app_data) {
-  global $ping_result_data;
+    global $ping_result_data, $rabbit;
 
-  $now = strtotime("now");
-  $sleep_time = strtotime($app_data['sleep_time']);
-  $wake_time = strtotime($app_data['wake_time']);
-  if($now > $sleep_time || $now < $wake_time) {
-    $flag = 1;
-  } else {
-    $flag = 0;
-  }
-
-  if(app_value('flag', 0) != $flag) {
-    $app_data['flag'] = $flag;
-
-    if($flag) {
-      $to_play = app_value('sleep_sound', '');
+    $now = strtotime("now");
+    $sleep_time = strtotime($app_data['sleep_time']);
+    $wake_time = strtotime($app_data['wake_time']);
+    if($now > $sleep_time || $now < $wake_time) {
+        $flag = 1;
     } else {
-      $to_play = app_value('wake_sound', '');
+        $flag = 0;
     }
 
-    $result = $app_data;
-  } else {
-    $to_play = '';
-    $result = false;
-  }
+    if(app_value('flag', 0) != $flag) {
+        $app_data['flag'] = $flag;
 
-  if($to_play != '') {
-    encode_play_media($to_play);
-  }
+        if($flag) {
+            $to_play = app_value('sleep_sound', '');
+        } else {
+            $to_play = app_value('wake_sound', '');
+        }
 
-  array_push($ping_result_data, 0x0b, 0x00, 0x00, 0x01, $flag);
+        $result = $app_data;
+    } else {
+        $to_play = '';
+        $result = false;
+    }
 
-  return $result;
+    $rabbit['asleep'] = $flag;
+
+    if($to_play != '') {
+        encode_play_media($to_play);
+    }
+
+    array_push($ping_result_data, 0x0b, 0x00, 0x00, 0x01, $flag);
+
+    return $result;
 }
 
 ?>
