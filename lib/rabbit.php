@@ -131,7 +131,7 @@ function save_rabbit_app($db, $rabbit, $app) {
 
     if(array_key_exists('id', $app)) {
         $st = $db->prepare("update apps set data=?, next_update=?, reschedule_interval=? where id=?");
-        $st->execute(array($app['data'], $app['id'], $app['next_update'], $app['reschedule_interval']));
+        $st->execute(array($app['data'], $app['next_update'], $app['reschedule_interval'], $app['id']));
     } else {
         $st = $db->prepare("insert into apps (rabbit_id, application, next_update, reschedule_interval, data) values (?, ?, ?, ?, ?)");
         $st->execute(array($rabbit['id'], $app['application'], $app['next_update'], $app['reschedule_interval'], $app['data']));
