@@ -14,6 +14,8 @@ if(isset($config)) {
   $apps = array();
 }
 
+$seen_apps = array();
+
 # Ping request from a rabbit
 $ping_result_data = array(0x7f);
 
@@ -22,27 +24,29 @@ array_push($ping_result_data, 0x03, 0x00, 0x00, 0x01, 10);
 
 foreach($apps as $app) {
   $name = $app['application'];
+  if(!array_key_exists($name, $seen_apps)) {
+      $seen_apps[$name] = true;
+      $success = true;
+      try {
+          include('apps/'.$name.'_app.php');
+          $app_data = unserialize($app['data']);
 
-  $success = true;
-  try {
-    include('apps/'.$name.'_app.php');
-    $app_data = unserialize($app['data']);
+          $result = call_user_func($name."_rabbit_app", $db, $rabbit, $app_data);
 
-    $result = call_user_func($name."_rabbit_app", $db, $rabbit, $app_data);
+          if($result) {
+              $app['data'] = serialize($result);
+              save_rabbit_app($db, $rabbit, $app);
+          }
+      } catch (Exception $e) {
+          $success = false;
+          error_log("Something went wrong in an app: ".$e->getMessage());
+      }
 
-    if($result) {
-      $app['data'] = serialize($result);
-      save_rabbit_app($db, $rabbit, $app);
-    }
-  } catch (Exception $e) {
-    $success = false;
-    error_log("Something went wrong in an app: ".$e->getMessage());
-  }
-
-  if($app['reschedule_interval'] && $success) {
-    reschedule_rabbit_app($db, $app);
-  } else {
-    remove_rabbit_app($db, $app);
+      if($app['reschedule_interval'] && $success) {
+          reschedule_rabbit_app($db, $app);
+      } else {
+          remove_rabbit_app($db, $app);
+      }
   }
 }
 
