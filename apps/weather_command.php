@@ -18,14 +18,19 @@ function weather_command($db, $rabbit) {
       $lang = "us"; // TODO: make this configurable
       $scale = "C"; // TODO: make this configurable
 
+      $weather_code = weather_code_for_doc($doc);
+      $weather_temp = weather_temp_for_doc($doc, $scale);
+
+      // error_log("code = $weather_code, temp = $weather_temp");
+
       $code = "ID ".time()."\n";
       $code .= "MU ".$base."weather/".$lang."/signature.mp3\n";
       $code .= "MW\n";
       $code .= "MU ".$base."weather/".$lang."/today.mp3\n";
       $code .= "MW\n";
-      $code .= "MU ".$base."weather/".$lang."/sky/".weather_code_for_doc($doc).".mp3\n";
+      $code .= "MU ".$base."weather/".$lang."/sky/".$weather_code.".mp3\n";
       $code .= "MW\n";
-      $code .= "MU ".$base."weather/".$lang."/temp/".weather_temp_for_doc($doc, $scale).".mp3\n";
+      $code .= "MU ".$base."weather/".$lang."/temp/".$weather_temp.".mp3\n";
       $code .= "MW\n";
       $code .= "MU ".$base."weather/".$lang."/degree.mp3\n";
       $code .= "MW\n";
