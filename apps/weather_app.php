@@ -55,16 +55,16 @@ function weather_code_for_doc($doc) {
     $STORMS = 5;
 
     $codes = array(
-        '0' => $STORMS, // tornado
-        '1' => $STORMS, // tropical storm
-        '2' => $STORMS, // hurricane
-        '3' => $STORMS, // severe thunderstorms
-        '4' => $STORMS, // thunderstorms
-        '5' => $SNOW, // mixed rain and snow
-        '6' => $SNOW, // mixed rain and sleet
-        '7' => $SNOW, // mixed snow and sleet
-        '8' => $RAIN, // freezing drizzle
-        '9' => $RAIN, // drizzle
+        '0'  => $STORMS, // tornado
+        '1'  => $STORMS, // tropical storm
+        '2'  => $STORMS, // hurricane
+        '3'  => $STORMS, // severe thunderstorms
+        '4'  => $STORMS, // thunderstorms
+        '5'  => $SNOW, // mixed rain and snow
+        '6'  => $SNOW, // mixed rain and sleet
+        '7'  => $SNOW, // mixed snow and sleet
+        '8'  => $RAIN, // freezing drizzle
+        '9'  => $RAIN, // drizzle
         '10' => $RAIN, // freezing rain
         '11' => $RAIN, // showers
         '12' => $RAIN, // showers
