@@ -2,13 +2,14 @@
 
 function weather_data_for_location($city) {
     $select = "select units, item.forecast from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"".$city."\") limit 1";
-    $url = "https://query.yahooapis.com/v1/public/yql?q=".urldecode($select)."&format=xml&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
+    $url = "https://query.yahooapis.com/v1/public/yql?q=".urlencode($select)."&format=xml&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
     $xml = cache_get($url);
     if($xml == null) {
         # error_log("Fetching weather data for: ".$city);
         # error_log($url);
 
         $session = curl_init($url);
+        curl_setopt($session, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         curl_setopt($session, CURLOPT_HEADER, false);
         curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
         $xml = curl_exec($session);
