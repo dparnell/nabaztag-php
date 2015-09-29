@@ -7,7 +7,7 @@ function tts_rabbit_app($db, $rabbit, $app_data) {
   // http://translate.google.com/translate_tts?q=<the text we want to hear>
 
   $code = "ID ".time()."\n";
-  $code .= "MU http://translate.google.com/translate_tts?ie=utf-8&tl=en&q=".urlencode($app_data['text'])."\n";
+  $code .= "MU http://translate.google.com/translate_tts?ie=utf-8&tl=en&q=".urlencode($app_data['text'])."&client=t\n";
   $code .= "MW\n";
 
   $msg = array();
