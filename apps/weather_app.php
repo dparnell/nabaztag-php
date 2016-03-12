@@ -24,6 +24,10 @@ function weather_data_for_location($city) {
 }
 
 function weather_temp_for_doc($doc, $scale = 'C') {
+    if(!$doc) {
+        return 0;
+    }
+
     $data_scale = (string)($doc->xpath("//query/results/channel/*[local-name()='units']/@temperature")[0]);
     $value = (string)($doc->xpath("//query/results/channel/item/*[local-name()='forecast']/@high")[0]);
     if($scale == $data_scale) {
@@ -42,6 +46,10 @@ function weather_temp_for_doc($doc, $scale = 'C') {
 }
 
 function weather_code_for_doc($doc) {
+    if(!$doc) {
+        return 0;
+    }
+
     $weather = (string)($doc->xpath("//query/results/channel/item/*[local-name()='forecast']/@code")[0]);
 
     # error_log("weather = $weather");
@@ -114,6 +122,7 @@ function weather_code_for_doc($doc) {
 
     return $code;
 }
+
 
 function weather_code_for_location($city) {
     $xml = weather_data_for_location($city);
