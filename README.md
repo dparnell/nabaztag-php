@@ -16,4 +16,5 @@ Requirements
 2. A server with Apache
 3. Apache mod_rewrite
 4. PHP 5.x
- 
+5. ffmpeg or aconv for speech recognition
+6. SVOX pico2wave for Text To Speech (in the libttspico-utils on Ubuntu)

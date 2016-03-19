@@ -913,7 +913,7 @@ html .ui-alt-icon .ui-radio-off:after {
 	width: 8px;
 	height: 8px;
 	border-width: 5px;
-	border-style: solid; 
+	border-style: solid;
 }
 .ui-alt-icon.ui-btn.ui-radio-on:after,
 .ui-alt-icon .ui-btn.ui-radio-on:after {
@@ -1121,7 +1121,7 @@ html .ui-bar-b .ui-body-inherit,
 html .ui-body-b .ui-body-inherit,
 html body .ui-group-theme-b .ui-body-inherit,
 html .ui-panel-page-container-b {
-	background-color: 			#2a2a2a /*{b-body-background-color}*/;
+	background-color: 			#9a9a9a /*{b-body-background-color}*/;
 	border-color:	 		#1d1d1d /*{b-body-border}*/;
 	color: 					#fff /*{b-body-color}*/;
 	text-shadow: 0 /*{b-body-shadow-x}*/ 1px /*{b-body-shadow-y}*/ 0 /*{b-body-shadow-radius}*/ 	#111 /*{b-body-shadow-color}*/;
@@ -1549,7 +1549,7 @@ div.ui-mobile-viewport {
 .ui-mini .ui-btn-icon-notext,
 .ui-header .ui-btn-icon-notext,
 .ui-footer .ui-btn-icon-notext {
-	font-size: 16px;	
+	font-size: 16px;
 	padding: 0;
 }
 .ui-btn-inline {
@@ -2243,11 +2243,11 @@ button.ui-btn-icon-notext,
 	-webkit-backface-visibility: hidden;
 	-webkit-transform: translateX(0); /* Needed to work around an iOS 3.1 bug that causes listview thumbs to disappear when -webkit-visibility:hidden is used. */
 	-webkit-transform-origin: 0;
-	
+
 	-moz-backface-visibility: hidden;
 	-moz-transform: translateX(0);
 	-moz-transform-origin: 0;
-	
+
 	backface-visibility :hidden;
 	transform: translateX(0);
 	transform-origin: 0;
@@ -2270,7 +2270,7 @@ button.ui-btn-icon-notext,
 	-moz-animation-duration: 250ms;
 	animation-name: flipintoright;
 	animation-duration: 250ms;
-	
+
 }
 .turn.out.reverse {
 	-webkit-transform: rotateY(90deg) scale(.9);
@@ -2337,17 +2337,17 @@ button.ui-btn-icon-notext,
 .flow {
 	-webkit-transform-origin: 50% 30%;
 	-webkit-box-shadow: 0 0 20px rgba(0,0,0,.4);
-	-moz-transform-origin: 50% 30%;	
+	-moz-transform-origin: 50% 30%;
 	-moz-box-shadow: 0 0 20px rgba(0,0,0,.4);
-	transform-origin: 50% 30%;	
+	transform-origin: 50% 30%;
 	box-shadow: 0 0 20px rgba(0,0,0,.4);
 }
 .ui-dialog.flow {
 	-webkit-transform-origin: none;
 	-webkit-box-shadow: none;
-	-moz-transform-origin: none;	
+	-moz-transform-origin: none;
 	-moz-box-shadow: none;
-	transform-origin: none;	
+	transform-origin: none;
 	box-shadow: none;
 }
 .flow.out {
@@ -2603,7 +2603,7 @@ li.ui-block-e {
 }
 .ui-grid-solo > .ui-block-a {
 	width: 100%;
-	float: none; 
+	float: none;
 }
 /* preset breakpoint to switch to stacked grid styles below 35em (560px) */
 @media (max-width: 35em) {
@@ -2612,8 +2612,8 @@ li.ui-block-e {
 	.ui-responsive > .ui-block-c,
 	.ui-responsive > .ui-block-d,
 	.ui-responsive > .ui-block-e {
-		width: 100%; 
-		float: none; 
+		width: 100%;
+		float: none;
 	}
 }
 /* fixed page header & footer configuration */
@@ -2684,7 +2684,7 @@ li.ui-block-e {
 	clip: rect(1px,1px,1px,1px);
 }
 .ui-header-fixed .ui-btn,
-.ui-footer-fixed .ui-btn { 
+.ui-footer-fixed .ui-btn {
 	z-index: 10;
 }
 /* workarounds for other widgets */
@@ -2783,7 +2783,7 @@ li.ui-block-e {
 	border: 0;
 	outline: 0;
 	-webkit-border-radius: inherit;
-	border-radius: inherit;	
+	border-radius: inherit;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	cursor: pointer;
@@ -2845,7 +2845,7 @@ li.ui-block-e {
 }
 .ui-collapsible-content {
 	display: block;
-	margin: 0;	
+	margin: 0;
 	padding: .5em 1em;
 }
 .ui-collapsible-themed-content .ui-collapsible-content {
@@ -2871,27 +2871,27 @@ li.ui-block-e {
 }
 .ui-collapsible-heading,
 .ui-collapsible-heading > .ui-btn {
-	-webkit-border-radius: inherit;	
-	border-radius: inherit;	
+	-webkit-border-radius: inherit;
+	border-radius: inherit;
 }
 .ui-collapsible-set .ui-collapsible.ui-first-child {
-	-webkit-border-top-right-radius: inherit;	
+	-webkit-border-top-right-radius: inherit;
 	border-top-right-radius: inherit;
-	-webkit-border-top-left-radius: inherit;	
-	border-top-left-radius: inherit;		
+	-webkit-border-top-left-radius: inherit;
+	border-top-left-radius: inherit;
 }
 .ui-collapsible-content,
 .ui-collapsible-set .ui-collapsible.ui-last-child {
-	-webkit-border-bottom-right-radius: inherit;	
+	-webkit-border-bottom-right-radius: inherit;
 	border-bottom-right-radius: inherit;
-	-webkit-border-bottom-left-radius: inherit;	
-	border-bottom-left-radius: inherit;		
+	-webkit-border-bottom-left-radius: inherit;
+	border-bottom-left-radius: inherit;
 }
 .ui-collapsible-themed-content:not(.ui-collapsible-collapsed) > .ui-collapsible-heading {
-	-webkit-border-bottom-right-radius: 0;	
+	-webkit-border-bottom-right-radius: 0;
 	border-bottom-right-radius: 0;
-	-webkit-border-bottom-left-radius: 0;	
-	border-bottom-left-radius: 0;		
+	-webkit-border-bottom-left-radius: 0;
+	border-bottom-left-radius: 0;
 }
 .ui-collapsible-set .ui-collapsible {
 	margin: -1px -1em 0;
@@ -3041,23 +3041,23 @@ fieldset.ui-controlgroup {
 	position: relative;
 	top: -1em;
 }
-.ui-dialog-contain > .ui-header, 
-.ui-dialog-contain > .ui-content, 
-.ui-dialog-contain > .ui-footer { 
+.ui-dialog-contain > .ui-header,
+.ui-dialog-contain > .ui-content,
+.ui-dialog-contain > .ui-footer {
 	display: block;
-	position: relative; 
+	position: relative;
 	width: auto;
 	margin: 0;
 }
 .ui-dialog-contain > .ui-header {
 	overflow: hidden;
-	z-index: 10; 
+	z-index: 10;
 	padding: 0;
 	border-top-width: 0;
 }
 .ui-dialog-contain > .ui-footer {
-	z-index: 10; 
-	padding: 0 1em; 
+	z-index: 10;
+	padding: 0 1em;
 	border-bottom-width: 0;
 }
 .ui-popup-open .ui-header-fixed,
@@ -3179,7 +3179,7 @@ fieldset.ui-controlgroup {
 }
 .ui-popup > .ui-btn-left,
 .ui-popup > .ui-btn-right {
-	position: absolute; 
+	position: absolute;
 	top: -11px;
 	margin: 0;
 	z-index: 1101;
@@ -3256,7 +3256,7 @@ fieldset.ui-controlgroup {
 /**
  * For each side, the arrow is twice the desired size and its corner is aligned
  * with the edge of the container:
- *                                           
+ *
  *           /\         /\                +----+       /\
  *          /  \       /  \               | /\ |top   /  \
  *      +----+  \     /  +----+       +-->|/  \|     /    \
@@ -3305,7 +3305,7 @@ fieldset.ui-controlgroup {
     margin-left: -5.857864376269049px;
     margin-top: -4.142135623730951px;
 }
- 
+
 .ui-popup-arrow-container.ui-popup-arrow-l.ie .ui-popup-arrow {
     margin-left: -7.0710678118654755px;
     margin-top: -5.857864376269049px;
@@ -3423,7 +3423,7 @@ fieldset.ui-controlgroup {
 	max-height: 100%;
 	outline: 0;
 	-webkit-border-radius: inherit;
-	border-radius: inherit;	
+	border-radius: inherit;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	cursor: pointer;
@@ -3440,7 +3440,7 @@ fieldset.ui-controlgroup {
 .ui-select .ui-state-disabled select {
 	display: none;
 }
-/* Because we add all classes of the select and option elements to the span... */ 
+/* Because we add all classes of the select and option elements to the span... */
 .ui-select span.ui-state-disabled {
 	filter: Alpha(Opacity=100);
 	opacity: 1;
@@ -3507,7 +3507,7 @@ fieldset.ui-controlgroup {
 .ui-selectmenu .ui-selectmenu-list {
 	margin: 0;
 	-webkit-border-radius: inherit;
-	border-radius: inherit;	
+	border-radius: inherit;
 }
 .ui-header:not(.ui-screen-hidden) + .ui-selectmenu-list {
 	-webkit-border-top-right-radius: 0;
@@ -3593,7 +3593,7 @@ fieldset.ui-controlgroup {
 }
 .ui-listview > li.ui-first-child,
 .ui-listview > li.ui-first-child > a.ui-btn {
-	-webkit-border-top-right-radius: inherit;	
+	-webkit-border-top-right-radius: inherit;
 	border-top-right-radius: inherit;
 	-webkit-border-top-left-radius: inherit;
 	border-top-left-radius: inherit;
@@ -3612,7 +3612,7 @@ fieldset.ui-controlgroup {
 	border-bottom-right-radius: 0;
 }
 .ui-listview > li.ui-first-child > a.ui-btn + a.ui-btn {
-	-webkit-border-top-left-radius: 0;	
+	-webkit-border-top-left-radius: 0;
 	border-top-left-radius: 0;
 	-webkit-border-top-right-radius: inherit;
 	border-top-right-radius: inherit;
@@ -3625,15 +3625,15 @@ fieldset.ui-controlgroup {
 }
 .ui-listview > li.ui-first-child img:first-child:not(.ui-li-icon) {
 	-webkit-border-top-left-radius: inherit;
-	border-top-left-radius: inherit;	
+	border-top-left-radius: inherit;
 }
 .ui-listview > li.ui-last-child img:first-child:not(.ui-li-icon) {
 	-webkit-border-bottom-left-radius: inherit;
-	border-bottom-left-radius: inherit;	
+	border-bottom-left-radius: inherit;
 }
 .ui-collapsible-content > .ui-listview:not(.ui-listview-inset) {
 	-webkit-border-radius: inherit;
-	border-radius: inherit;	
+	border-radius: inherit;
 }
 .ui-listview > .ui-li-static {
 	padding: .7em 1em;
@@ -4393,35 +4393,35 @@ html .ui-popup .ui-field-contain > label + .ui-flipswitch {
  Styles for the table columntoggle mode
 */
 .ui-table-reflow td .ui-table-cell-label,
-.ui-table-reflow th .ui-table-cell-label { 
+.ui-table-reflow th .ui-table-cell-label {
 	display: none;
 }
-/* Mobile first styles: Begin with the stacked presentation at narrow widths */ 
+/* Mobile first styles: Begin with the stacked presentation at narrow widths */
 @media only all {
-	/* Hide the table headers */ 
-	.ui-table-reflow thead td, 
+	/* Hide the table headers */
+	.ui-table-reflow thead td,
 	.ui-table-reflow thead th {
 		display: none;
 	}
-	/* Show the table cells as a block level element */ 
+	/* Show the table cells as a block level element */
 	.ui-table-reflow td,
-	.ui-table-reflow th { 
+	.ui-table-reflow th {
 		text-align: left;
 		display: block;
 	}
-	/* Add a fair amount of top margin to visually separate each row when stacked */  
+	/* Add a fair amount of top margin to visually separate each row when stacked */
 	.ui-table-reflow tbody th {
 		margin-top: 3em;
 	}
-	/* Make the label elements a percentage width */ 
+	/* Make the label elements a percentage width */
 	.ui-table-reflow td .ui-table-cell-label,
-	.ui-table-reflow th .ui-table-cell-label { 
-		padding: .4em; 
-		min-width: 30%; 
+	.ui-table-reflow th .ui-table-cell-label {
+		padding: .4em;
+		min-width: 30%;
 		display: inline-block;
 		margin: -.4em 1em -.4em -.4em;
 	}
-	/* For grouped headers, have a different style to visually separate the levels by classing the first label in each col group */ 
+	/* For grouped headers, have a different style to visually separate the levels by classing the first label in each col group */
 	.ui-table-reflow th .ui-table-cell-label-top,
 	.ui-table-reflow td .ui-table-cell-label-top {
 		display: block;
@@ -4432,13 +4432,13 @@ html .ui-popup .ui-field-contain > label + .ui-flipswitch {
 		font-weight: normal;
 	}
 }
-/* Breakpoint to show as a standard table at 560px (35em x 16px) or wider */ 
+/* Breakpoint to show as a standard table at 560px (35em x 16px) or wider */
 @media ( min-width: 35em ) {
 	/* Fixes table rendering when switching between breakpoints in Safari <= 5. See https://github.com/jquery/jquery-mobile/issues/5380 */
 	.ui-table-reflow.ui-responsive {
 		display: table-row-group;
 	}
-	/* Show the table header rows */ 
+	/* Show the table header rows */
 	.ui-table-reflow.ui-responsive td,
 	.ui-table-reflow.ui-responsive th,
 	.ui-table-reflow.ui-responsive tbody th,
@@ -4448,14 +4448,14 @@ html .ui-popup .ui-field-contain > label + .ui-flipswitch {
 		display: table-cell;
 		margin: 0;
 	}
-	/* Hide the labels in each cell */ 
+	/* Hide the labels in each cell */
 	.ui-table-reflow.ui-responsive td .ui-table-cell-label,
-	.ui-table-reflow.ui-responsive th .ui-table-cell-label { 
+	.ui-table-reflow.ui-responsive th .ui-table-cell-label {
 		display: none;
 	}
 }
-/* Hack to make IE9 and WP7.5 treat cells like block level elements, scoped to ui-responsive class */ 
-/* Applied in a max-width media query up to the table layout breakpoint so we don't need to negate this*/ 
+/* Hack to make IE9 and WP7.5 treat cells like block level elements, scoped to ui-responsive class */
+/* Applied in a max-width media query up to the table layout breakpoint so we don't need to negate this*/
 @media ( max-width: 35em ) {
 	.ui-table-reflow.ui-responsive td,
 	.ui-table-reflow.ui-responsive th {
@@ -4685,7 +4685,7 @@ html .ui-popup .ui-field-contain > label + .ui-flipswitch {
 		margin-left: 17em;
 	}
 	.ui-responsive-panel .ui-panel-page-content-open {
-		width: auto;	
+		width: auto;
 	}
 	.ui-responsive-panel .ui-panel-dismiss-display-push,
 	.ui-responsive-panel.ui-page-active ~ .ui-panel-dismiss-display-push {

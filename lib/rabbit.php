@@ -84,7 +84,6 @@ function app_for_rabbit_by_name($db, $rabbit, $app_name) {
     }
 
     if($result == null) {
-        error_log("WHERE");
         $result = array();
         $result['rabbit_id'] = $rabbit['id'];
         $result['application'] = $app_name;
@@ -144,6 +143,9 @@ function save_rabbit_app($db, $rabbit, $app) {
     if(!array_key_exists('reschedule_interval', $app)) {
         $app['reschedule_interval'] = 0;
     }
+    if(!array_key_exists('on_days', $app)) {
+        $app['on_days'] = 0;
+    }
 
     if(array_key_exists('id', $app)) {
         $st = $db->prepare("update apps set data=?, next_update=?, reschedule_interval=?, on_days=? where id=?");
@@ -177,6 +179,47 @@ function app_update_interval($app) {
     }
 
     return 'Once off';
+}
+
+function rfid_tags_for_rabbit($db, $rabbit) {
+    $st = $db->prepare("select * from rfid_tags where rabbit_id = ?");
+    if($st) {
+        $st->execute(array($rabbit['id']));
+
+        return $st->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    return array();
+}
+
+function rfid_tag_for_rabbit($db, $rabbit, $tagid) {
+    $st = $db->prepare("select * from rfid_tags where rabbit_id = ? and rfid=?");
+    if($st) {
+        $st->execute(array($rabbit['id'], $tagid));
+
+        $result = $st->fetch(PDO::FETCH_ASSOC);
+    }
+
+    if($result == null) {
+        $st->closeCursor();
+
+        $st = $db->prepare("insert into rfid_tags (rabbit_id, rfid, last_seen) values (?, ?, ?)");
+        $st->execute(array($rabbit['id'], $tagid, time()));
+
+        $result = array();
+        $result['id'] = $db->lastInsertId();
+        $result['rabbit_id'] = $rabbit['id'];
+        $result['rfid'] = $tagid;
+        $result['last_seen'] = time();
+        $result['command'] = null;
+    }
+
+    return $result;
+}
+
+function save_rfid_tag($db, $tag) {
+        $st = $db->prepare("update rfid_tags set last_seen=?, command=? where id=?");
+        $st->execute(array($tag['last_seen'], $tag['command'], $tag['id']));
 }
 
 ?>

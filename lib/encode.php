@@ -75,4 +75,25 @@ function encode_play_media($url) {
     foreach($msg as $e) { array_push($ping_result_data, $e); }
 }
 
+function process_commands($commands) {
+    $result = "ID ".time()."\n";
+    $parts = explode("\n", $commands);
+    foreach($parts as $part) {
+        if(preg_match('/^FETCH (https?:\/\/.+)/', $part, $matches) == 1) {
+            $url = preg_replace_callback('/%([^%])%/', function($matches) { return $_REQUEST[$matches[1]]; }, $matches[1]);
+
+            $result .= file_get_contents($url);
+        } elseif(preg_match('/^TTS (.+)/', $part, $matches) == 1) {
+            $request_url = "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]";
+            $base = preg_replace('/\/[^\/]+\.php/', '/tts.php', $request_url);
+            $result .= "MU ".$base."?txt=".urlencode($matches[1])."\n";
+            $result .= "MW\n";
+        } else {
+            $result .= $part."\n";
+        }
+    }
+
+    return $result;
+}
+
 ?>

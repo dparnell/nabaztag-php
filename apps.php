@@ -38,7 +38,7 @@ require('header.php');
 
   <h2>Available Apps for your rabbit</h2>
   <table class="ui-body ui-body-b ui-corner-all">
-    <tr><th class="ui-controlgroup-label">Application</th></tr>
+    <tr><th class="ui-label">Application</th></tr>
 <?php
 $apps_dir = dirname(__FILE__)."/apps";
 $files = scandir($apps_dir);
@@ -56,6 +56,20 @@ foreach($files as $file) {
 }
 
 ?>
+  </table>
+
+  <h1>RFID Tags</h1>
+  <table class="ui-body ui-body-b ui-corner-all">
+    <tr><th class="ui-label">Tag ID</th><th class="ui-label">Last Seen</th></tr>
+<?php
+$tags = rfid_tags_for_rabbit($db, $rabbit);
+foreach($tags as $tag) {
+?>
+    <tr><td><a href="setup_rfid_tag.php?rabbit=<?php echo $rabbit['mac_id']; ?>&tag=<?php echo $tag['rfid']; ?>"><?php echo $tag['rfid']; ?></a></td><td><?php echo strftime('%Y-%m-%d %H:%M', $tag['last_seen']); ?></td></tr>
+<?php
+}
+?>
+
   </table>
 </div>
 <?php require('footer.php'); ?>

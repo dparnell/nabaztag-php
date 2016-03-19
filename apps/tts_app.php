@@ -1,14 +1,11 @@
 <?php
+require_once('lib/encode.php');
 
 array_push($multi_instance_apps, 'tts');
 
 function tts_rabbit_app($db, $rabbit, $app_data) {
   global $ping_result_data;
-  // http://translate.google.com/translate_tts?q=<the text we want to hear>
-
-  $code = "ID ".time()."\n";
-  $code .= "MU http://translate.google.com/translate_tts?ie=utf-8&tl=en&q=".urlencode($app_data['text'])."&client=t\n";
-  $code .= "MW\n";
+  $code = process_commands("TTS ".$app_data['text']);
 
   $msg = array();
   encode_message($msg, $code);
