@@ -103,17 +103,18 @@ function remove_rabbit_app($db, $app) {
 }
 
 function reschedule_rabbit_app($db, $app) {
-    $interval = $app['reschedule_interval'];
-    $next_update = $app['next_update'] + $interval;
+    $interval = "+".$app['reschedule_interval']." seconds";
+    $next_update = strtotime($interval, $app['next_update']);
+
     while($next_update < time()) {
-        $next_update += $interval;
+        $next_update = strtotime($interval, $next_update);
     }
 
     $on_days = $app['on_days'];
     if($on_days) {
         $day = getdate($next_update);
         while(((1<<$day['wday']) & $on_days) == 0) {
-            $next_update += + $interval;
+            $next_update = strtotime($interval, $next_update);
             $day = getdate($next_update);
         }
     }
