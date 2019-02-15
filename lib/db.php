@@ -94,7 +94,7 @@ function rabbits($db) {
     $sql .= " or owner_id is null";
   }
 
-  $st = $db->prepare($sql." order by name");
+  $st = $db->prepare($sql." order by round(last_seen/6000) desc, name");
   $st->execute(array(current_user_id()));
 
   return $st->fetchAll(PDO::FETCH_ASSOC);
