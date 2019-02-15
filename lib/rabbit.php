@@ -106,7 +106,8 @@ function reschedule_rabbit_app($db, $app) {
     $interval = "+".$app['reschedule_interval']." seconds";
     $next_update = strtotime($interval, $app['next_update']);
 
-    while($next_update < time()) {
+    $now = time();
+    while($next_update < $now) {
         $next_update = strtotime($interval, $next_update);
     }
 
