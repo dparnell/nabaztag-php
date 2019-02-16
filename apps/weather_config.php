@@ -4,6 +4,10 @@
 <fieldset data-role="controlgroup">
    <legend>Weather App Setup:</legend>
    <div data-role="fieldcontain">
+     <label for="city"><a href="https://www.apixu.com/" title="Free Weather API" target="_blank">APIXU API Key</a></label>
+	 <input type="text" name="key" id="key" value="<?php echo app_value('key'); ?>"/>
+   </div>
+   <div data-role="fieldcontain">
      <label for="city">City</label>
      <input type="text" name="city" id="city" value="<?php echo app_value('city'); ?>"/>
    </div>

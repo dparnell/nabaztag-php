@@ -12,7 +12,7 @@ function weather_command($db, $rabbit) {
 
     $base = config_value('app-media-base');
     if($base) {
-      $xml = weather_data_for_location($app_data['city']);
+      $xml = weather_data_for_location($app_data['key'], $app_data['city']);
       $doc = simplexml_load_string($xml);
 
       $lang = "us"; // TODO: make this configurable
