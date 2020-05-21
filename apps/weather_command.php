@@ -12,11 +12,11 @@ function weather_command($db, $rabbit) {
 
     $base = config_value('app-media-base');
     if($base) {
-      $xml = weather_data_for_location($app_data['key'], $app_data['city']);
+      $xml = weather_data_for_location($app_data['id'], $app_data['key'], $app_data['city']);
       $doc = simplexml_load_string($xml);
 
       $lang = "us"; // TODO: make this configurable
-      $scale = "C"; // TODO: make this configurable
+      $scale = "c"; // TODO: make this configurable
 
       $weather_code = weather_code_for_doc($doc);
       $weather_temp = weather_temp_for_doc($doc, $scale);
